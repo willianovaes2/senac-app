@@ -1,0 +1,349 @@
+* {
+    margin: 0;
+    font-family: "Sanchez", serif;
+    box-sizing: border-box;
+}
+ 
+body {
+    background-color: #f0f0f0 !important;
+}
+ 
+header {
+    width: 100%;
+    height: 150px;
+    position: relative;
+    top: 0;
+    background-color: white;
+}
+ 
+.header-top {
+    width: 100%;
+    height: 40%;
+    background-color: rgb(0, 77, 139);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    border-bottom: 5px solid orange;
+ 
+}
+ 
+ 
+.header-mid {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid rgb(202, 202, 202);
+}
+ 
+.header-mid .logo-senac {
+    display: flex;
+    justify-content: center;
+}
+ 
+.nav a {
+    text-decoration: none;
+    padding: 0px 10px;
+    color: rgb(71, 71, 71);
+}
+ 
+main {
+    background-color: #f0f0f0;
+    width: 100%;
+    height: auto;
+}
+ 
+.bg-purple {
+    background-color: #8b5cf6;
+}
+ 
+.bg-warning,
+.bg-purple,
+.bg-success,
+.bg-primary {
+    border-radius: 10px;
+}
+ 
+.container-xl {
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 10px;
+    display: grid;
+    margin-bottom: 30px;
+    border-top: solid 6px orange;
+    border-radius: 12px;
+ 
+}
+ 
+.hover-shadow {
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+ 
+.hover-shadow:hover {
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+    transform: translateY(-3px);
+}
+ 
+.hover-shadow-soft {
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+ 
+.hover-shadow-soft:hover {
+    box-shadow: 0 .25rem .5rem rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+ 
+.uc-card {
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+}
+ 
+.badge-ativa {
+    background-color: #d1fae5;
+    color: #065f46;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+ 
+.uc-actions .btn {
+    width: 48%;
+}
+ 
+.docente-card {
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+}
+ 
+.avatar {
+    width: 48px;
+    height: 48px;
+    background-color: #ff7a18;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+}
+ 
+.status-ativo {
+    background-color: #d1fae5;
+    color: #065f46;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+ 
+table tbody tr {
+    transition: background-color .2s ease;
+}
+ 
+table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+ 
+.nav {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+ 
+.nav-item .btn {
+    padding: 6px 10px;
+}
+ 
+.nav-item a {
+    color: #ffffff;
+}
+ 
+.card-resumo {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+}
+ 
+.badge-soft-warning {
+    background-color: #fa6c00;
+    color: #ff7a00;
+}
+ 
+.badge-soft-success {
+    background-color: #298100;
+    color: #16a34a;
+}
+ 
+.badge-soft-danger {
+    background-color: #ff3a3a;
+    color: #dc2626;
+}
+ 
+.badge-soft-info {
+    background-color: #e0f2fe;
+    color: #0284c7;
+}
+ 
+.table th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #6b7280;
+}
+ 
+.search-box {
+    background-color: #f3f4f6;
+    border-radius: 10px;
+    padding: 10px 15px;
+}
+ 
+.filter-tabs button {
+    border-radius: 20px;
+    border: 1px solid gainsboro;
+}
+ 
+.modal-content {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+}
+ 
+.form-control,
+.form-select {
+    border-radius: 10px;
+    background-color: #f9fafb;
+}
+ 
+.main {
+    width: 100%;
+    height: 900px;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+}
+ 
+.lista-scroll {
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    padding: 12px;
+}
+ 
+.lista-scroll-sm {
+    max-height: 160px;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    padding: 12px;
+}
+ 
+.login-box {
+    border-top: solid 6px orange;
+    border-radius: 12px;
+}
+ 
+footer {
+    height: 300px;
+    width: 100%;
+    bottom: 0;
+}
+ 
+.footer-top {
+    width: 100%;
+    height: 150px;
+    background-color: #0052a1;
+    color: #ffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-top: 5px solid orange;
+}
+ 
+.footer-top a {
+    color: #ffffff;
+}
+ 
+.footer-top a:hover {
+    color: rgb(212, 212, 212);
+}
+ 
+.footer-top p {
+    width: 50%;
+}
+ 
+.footer-bottom {
+    width: 100%;
+    height: 150px;
+    background-color: #014a8e;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+ 
+.logo-branco {
+    width: 50%;
+    margin: 0px 100px;
+}
+ 
+.logos {
+    width: 50%;
+    margin: 0px 50px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+ 
+.logos .bi {
+    color: white;
+}
+ 
+/* teste */
+ 
+.title {
+    display: flex;
+    justify-content: left;
+}
+ 
+.row .btn {
+ 
+    justify-content: center;
+    text-align: center;
+    width: 50%;
+    margin: 10px 0px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+ 
+.login-box {
+    width: 500px;
+    background: rgb(255, 255, 255);
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+ 
+ 
+.user-type button {
+    border: none;
+    border-radius: 8px;
+    width: 50%;
+    margin: 10px 2px;
+}
+ 
+.user-type {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+ 
+.sign-up p {
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+ 
+.hidden {
+    display: none !important;
+}

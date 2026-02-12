@@ -1,0 +1,156 @@
+<x-layout>
+    <div class="container-xl py-4 shadow">
+
+        <!-- Conteudo Principal -->
+
+        <section class="container-fluid">
+
+            <!-- HEADER -->
+            <div class="card shadow-sm rounded-4 p-4 mb-4">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h4 class="fw-bold text-primary mb-1">Controle de Presença</h4>
+                        <small class="text-muted">Visualização do Aluno</small>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="d-flex align-items-center gap-3">
+                    <span class="badge rounded-pill bg-primary-subtle text-primary fs-6">👤</span>
+                    <div>
+                        <div class="fw-semibold">{{aluno->nome}}</div>
+                        <small class="text-muted">{{aluno->ra}}</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UC -->
+            <div class="card shadow-sm rounded-4 p-4 mb-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="bi bi-book fs-5"></i>
+                        <div>
+                            <div class="fw-bold">{{uc->nome}}</div>
+                            <small class="text-muted">{{uc->docente}}</small>
+                        </div>
+                    </div>
+
+                    <div class="dropdown">
+                        <button class="btn btn-warning text-white dropdown-toggle" type="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Ver outras UCs
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            @foreach($ucs as $uc)
+                            <li>
+                                <a href="#" class="dropdown-item uc-item" data-uc-id="{{ $uc->id }}">
+                                    {{ $uc->nome }}
+                                </a>
+                            </li>
+                            @endforeach
+                        </ul>
+
+                        <!-- public function controlePresenca($aluno_id, $uc_id = null)
+                        {
+                        $aluno = Aluno::findOrFail($aluno_id);
+
+                        // Todas as UCs do aluno
+                        $ucs = $aluno->ucs;
+
+                        // Se não escolher UC, pega a primeira
+                        if (!$uc_id) {
+                        $ucSelecionada = $ucs->first();
+                        } else {
+                        $ucSelecionada = $ucs->where('id', $uc_id)->first();
+                        }
+
+                        // Exemplo de cálculo
+                        $totalAulas = $ucSelecionada->aulas->count();
+                        $presencas = $ucSelecionada->presencas()
+                        ->where('aluno_id', $aluno->id)
+                        ->where('presente', 1)
+                        ->count();
+
+                        $faltas = $totalAulas - $presencas;
+                        $percentual = $totalAulas > 0
+                        ? ($presencas / $totalAulas) * 100
+                        : 0;
+
+                        return view('controle-presenca', compact(
+                        'aluno',
+                        'ucs',
+                        'ucSelecionada',
+                        'totalAulas',
+                        'presencas',
+                        'faltas',
+                        'percentual'
+                        ));
+                        }
+                        🧱 2️⃣ Rota
+                        Route::get('/presenca/{aluno}/{uc?}',
+                        [PresencaController::class, 'controlePresenca']
+                        )->name('presenca'); -->
+
+                        <!-- Testar algum destes -->
+
+                        <!-- PASSO 2 — Criar rota
+                        Route::get('/presenca/dados/{uc}/{aluno}', [PresencaController::class, 'buscarDados']);
+
+                        ✅ PASSO 3 — Controller
+                        public function buscarDados($ucId, $alunoId)
+                        {
+                        $dados = Presenca::where('uc_id', $ucId)
+                        ->where('aluno_id', $alunoId)
+                        ->first();
+
+                        return response()->json([
+                        'percentual' => $dados->percentual,
+                        'total_aulas' => $dados->total_aulas,
+                        'presencas' => $dados->presencas,
+                        'faltas' => $dados->faltas
+                        ]);
+                        } -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATUS -->
+            <div class="alert alert-success rounded-4 d-flex align-items-center gap-3 mb-4">
+                <span class="badge bg-success rounded-pill fs-4">✔</span>
+                <div>
+                    <div class="fw-bold fs-4">80.0%</div>
+                    <small>Você está aprovado!</small>
+                </div>
+            </div>
+
+            <!-- RESUMO -->
+            <div class="row g-3 mb-4">
+
+                <div class="col-md-4">
+                    <div class="p-3 bg-primary-subtle rounded-4">
+                        <small>Total de Aulas</small>
+                        <h3 class="fw-bold text-primary mb-0">20</h3>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-3 bg-success-subtle rounded-4">
+                        <small>Presenças</small>
+                        <h3 class="fw-bold text-success mb-0">16</h3>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-3 bg-danger-subtle rounded-4">
+                        <small>Faltas</small>
+                        <h3 class="fw-bold text-danger mb-0">4</h3>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+</x-layout>
