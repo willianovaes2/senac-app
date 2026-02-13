@@ -17,6 +17,11 @@ class administradorController extends Controller
     {
         return view('paginas.dashboardAdm');
     } //fim do metodo de direcionamento
+    
+    public function addAdministrador()
+    {
+        return view('paginas.cadastrarAdministrador');
+    } //fim do metodo de direcionamento
 
     public function inserirAdministrador(Request $request)
     {

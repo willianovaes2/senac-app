@@ -23,30 +23,6 @@ class docenteController extends Controller
             'turno.required' => 'Selecione pelo menos um turno.',
         ]);
 
-        // VALIDAÇÕES (É AQUI QUE A RULE FUNCIONA)
-        $request->validate([
-            'cpf'            => ['required', new ValidaCpf, 'unique:docente,cpf'],
-            'emailDocente'   => 'required|email|unique:docente,emailDocente',
-            'turno' => 'required|string'
-        ], [
-            'cpf.unique' => 'Este CPF já está cadastrado.',
-            'emailDocente.unique' => 'Este e-mail já está cadastrado.',
-            'turno.required' => 'Selecione pelo menos um turno.',
-        ]);
-
-        // Remove máscara do CPF
-        $cpfLimpo = preg_replace('/\D/', '', $request->cpf);
-
-        // Validação de idade mínima (18 anos)
-        $dataLimite = Carbon::now()->subYears(18);
-        if (Carbon::parse($request->dataNascimento)->greaterThan($dataLimite)) {
-            return back()
-                ->withInput()
-                ->withErrors([
-                    'dataNascimento' => 'O docente deve ter no mínimo 18 anos.'
-                ]);
-        }
-
         $nomeDocente            = $request->input('nomeDocente');
         $cpf                    = $request->input('cpf');
         $dataNascimento         = $request->input('dataNascimento');
@@ -104,9 +80,9 @@ class docenteController extends Controller
         ], [
             'turno.required' => 'Selecione pelo menos um turno.',
         ]);
-        $docente = docenteModel::findOrFail($id);
-
-        $docente->update($request->except('_token'));
+        docenteModel::where('id', $id)->update(
+            $request->except(['_token', '_method'])
+        );
 
         return redirect('/docentes');
     } //fim do metodo atualiziar

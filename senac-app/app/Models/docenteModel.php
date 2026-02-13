@@ -9,22 +9,6 @@ class docenteModel extends Model
 {
     use HasFactory;
     protected $table = 'docente';
-    protected $fillable = [
-        'nomeDocente',
-        'cpf',
-        'dataNascimento',
-        'telefone',
-        'emailDocente',
-        'formacao',
-        'especializacao',
-        'status',
-        'dataCadastro',
-        'cargaHorario',
-        'turno',
-        'senhaDocente',
-        'endereco',
-        'area',
-    ];
 
     protected $casts = [
         'turno' => 'array'

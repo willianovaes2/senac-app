@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\administradorModel;
+use App\Models\alunoModel;
+use App\Models\docenteModel;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -21,44 +23,53 @@ class AuthController extends Controller
         $senha = $request->input('senha');
         $tipo = $request->input('opcao');
 
-        $usuario = administradorModel::where('email', $email)->first();
-
-        if (!$usuario || $usuario->senha !== $senha) {
-            return redirect('/')->with ('erro', 'Credenciais inválidas');
-        }
-
-        // Administrador
+        // ADMIN
         if ($tipo == 1) {
+            $usuario = administradorModel::where('email', $email)->first();
+
+            if (!$usuario || $usuario->senha !== $senha) {
+                return redirect('/')->with('erro', 'Email ou Senha inválidas');
+            }
+
+            Session::put('usuario', $usuario);
+            Session::put('tipo', 1);
+
             return redirect('/dashboardAdm');
         }
 
-        // Docente
+        // ALUNO
         if ($tipo == 2) {
-            return redirect('/telaInicialDocente');
+            $usuario = docenteModel::where('emailDocente', $email)->first();
+
+            if (!$usuario || $usuario->senhaDocente !== $senha) {
+                return redirect('/')->with('erro', 'Email ou Senha inválidas');
+            }
+
+            Session::put('usuario', $usuario);
+            Session::put('tipo', 3);
+
+            return redirect('/exibirDocente/' . $usuario->id);
         }
 
-        // Aluno
+        // ALUNO
         if ($tipo == 3) {
-            return redirect('/telaInicialAluno');
+            $usuario = alunoModel::where('emailAluno', $email)->first();
+
+            if (!$usuario || $usuario->senhaAluno !== $senha) {
+                return redirect('/')->with('erro', 'Email ou Senha inválidas');
+            }
+
+            Session::put('usuario', $usuario);
+            Session::put('tipo', 3);
+
+            return redirect('/exibirAluno/' . $usuario->id);
         }
-
         return redirect('/');
-
-        /*if($usuario && $usuario->senha == $senha && $tipo == 1){
-            return view('paginas.dashboardAdm');
-        }else if($usuario && $usuario->senha == $senha && $tipo == 2) {
-            return view('paginas.docentes');
-        }else if($usuario && $usuario->senha == $senha && $tipo == 3) {
-            return view('paginas.alunos');
-        }else{
-            return view('paginas.index');
-        }*/
-
     } //fim da autenticação de login
 
     public function logout()
     {
         Session::flush(); // Limpa todas as variáveis de sessão
-        return redirect()->route('login'); // Redireciona para a página inicial
+        return redirect('/'); // Redireciona para a página inicial
     }
 }

@@ -9,19 +9,6 @@ class alunoModel extends Model
 {
     use HasFactory;
     protected $table = 'aluno';
-    protected $fillable = [
-        'nomeAluno',
-        'ra',
-        'cpf',
-        'dataNascimento',
-        'telefone',
-        'emailAluno',
-        'senhaAluno',
-        'endereco',
-        'dataMatricula',
-        'tipo',
-        'status',
-    ];
 
     public function turmas()
     {
@@ -58,5 +45,15 @@ class alunoModel extends Model
         } while (self::where('ra', $ra)->exists());
 
         return $ra;
+    }
+
+    public function ucs()
+    {
+        return $this->belongsToMany(
+            cursoModel::class,
+            'aluno_curso', // nome da tabela pivô
+            'aluno_id',
+            'curso_id'
+        );
     }
 }

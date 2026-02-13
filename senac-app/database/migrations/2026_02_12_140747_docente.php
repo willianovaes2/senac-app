@@ -29,7 +29,6 @@ return new class extends Migration
             $table->json('turno')->nullable();
             $table->longtext('senhaDocente');
             $table->longtext('endereco');
-
             $table->timestamps();
         });
         

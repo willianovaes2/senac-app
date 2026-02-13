@@ -19,7 +19,14 @@
 <body class="d-flex flex-column min-vh-100">
     <header>
         <div class="header-top shadow">
-
+            @if(session('usuario') && !request()->is('/'))
+            <form action="logout" method="POST" class="d-inline m-2">
+                @csrf
+                <button type="submit" class="btn btn-outline-light btn-sm border-0">
+                    <i class="bi bi-box-arrow-left"></i> Sair
+                </button>
+            </form>
+            @endif
         </div>
 
         <div class="header-mid shadow">

@@ -14,6 +14,7 @@ return new class extends Migration
             $table->date('dia');
             $table->string('status');
 
+
             $table->foreignId('curso_id')
                 ->constrained('curso')
                 ->onDelete('cascade');
@@ -22,12 +23,20 @@ return new class extends Migration
                 ->constrained('uc')
                 ->onDelete('cascade');
 
+            $table->foreignId('docente_responsavel_id')
+                ->nullable()
+                ->constrained('docente')
+                ->onDelete('set null');
+
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('aulas');
+        Schema::table('aulas', function (Blueprint $table) {
+            $table->dropForeign(['docente_responsavel_id']);
+            $table->dropColumn('docente_responsavel_id');
+        });
     }
 };

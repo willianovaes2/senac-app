@@ -44,4 +44,14 @@ class turmaModel extends Model
             'aluno_id'
         );
     }
+
+    public function ucsDiretas()
+    {
+        return $this->belongsToMany(
+            ucModel::class,
+            'uc_turma',
+            'turma_id',
+            'uc_id'
+        )->withPivot(['data_inicio', 'data_fim', 'status']);
+    }
 }

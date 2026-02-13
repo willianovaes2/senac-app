@@ -264,3 +264,31 @@ document.querySelectorAll('.uc-item').forEach(item => {
     });
 
 });
+
+const form = document.getElementById('form-editar-docente');
+const checkboxes = document.querySelectorAll('.turno-checkbox');
+
+form.addEventListener('submit', function (e) {
+    const algumMarcado = Array.from(checkboxes).some(cb => cb.checked);
+    let erro = document.getElementById('erro-turnos');
+
+    if (!algumMarcado) {
+        e.preventDefault();
+
+        if (!erro) {
+            erro = document.createElement('div');
+            erro.id = 'erro-turnos';
+            erro.className = 'text-danger small mb-2';
+            erro.innerText = 'Selecione pelo menos um turno.';
+            checkboxes[0].closest('.lista-scroll').prepend(erro);
+        }
+    }
+});
+
+// remove erro assim que marcar qualquer checkbox
+checkboxes.forEach(cb => {
+    cb.addEventListener('change', () => {
+        const erro = document.getElementById('erro-turnos');
+        if (erro) erro.remove();
+    });
+}); 

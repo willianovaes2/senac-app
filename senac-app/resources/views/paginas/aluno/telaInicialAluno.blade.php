@@ -19,8 +19,8 @@
                 <div class="d-flex align-items-center gap-3">
                     <span class="badge rounded-pill bg-primary-subtle text-primary fs-6">👤</span>
                     <div>
-                        <div class="fw-semibold">{{aluno->nome}}</div>
-                        <small class="text-muted">{{aluno->ra}}</small>
+                        <div class="fw-semibold">{{ $aluno->nomeAluno}}</div>
+                        <small class="text-muted">{{ $aluno->ra}}</small>
                     </div>
                 </div>
             </div>
@@ -31,8 +31,8 @@
                     <div class="d-flex align-items-center gap-3">
                         <i class="bi bi-book fs-5"></i>
                         <div>
-                            <div class="fw-bold">{{uc->nome}}</div>
-                            <small class="text-muted">{{uc->docente}}</small>
+                            <div class="fw-bold">{{ $uc->nome}}</div>
+                            <small class="text-muted">{{ $uc->docente}}</small>
                         </div>
                     </div>
 
