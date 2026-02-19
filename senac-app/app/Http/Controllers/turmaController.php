@@ -11,19 +11,20 @@ use Illuminate\Http\Request;
 
 class turmaController extends Controller
 {
-    public function __construct() {}
+    public function __construct(){
+
+    }//fim do método
 
     public function cadastrarTurma()
     {
         return view('paginas.turmas');
-    }
+    } //fim do metodo de direcionamento
 
     public function inserirTurma(Request $request)
     {
         $curso = cursoModel::findOrFail($request->curso_id);
 
         $ultimaTurma = turmaModel::where('curso_id', $curso->id)
-            ->where('turno', $request->turno)
             ->orderBy('id', 'desc')
             ->first();
 
@@ -32,8 +33,6 @@ class turmaController extends Controller
         if ($ultimaTurma) {
             preg_match('/(\d+)/', $ultimaTurma->codigoTurma, $matches);
             $numeroSequencial = intval($matches[1]) + 1;
-        } else {
-            $numeroSequencial = 1;
         }
 
         $codigoTurma = $curso->sigla . $numeroSequencial . $request->turno;
@@ -68,7 +67,7 @@ class turmaController extends Controller
         }
 
         return redirect('/turmas');
-    }
+    } //fim do metodo inserir
 
     public function consultarTurma()
     {
@@ -83,7 +82,8 @@ class turmaController extends Controller
             'docentes',
             'alunos'
         ));
-    }
+    } //fim do metodo consultar
+
 
     public function editarTurma($id)
     {
@@ -100,29 +100,15 @@ class turmaController extends Controller
             'alunos'
         ));
     }
+    //fim do metodo editar
 
     public function atualizarTurma(Request $request, $id)
     {
         $turma = turmaModel::findOrFail($id);
-        $curso = cursoModel::findOrFail($request->curso_id);
 
-        $service = new CalendarioLetivoService();
-
-        $dataFim = $service->calcularDataFinal(
-            $request->dataInicio,
-            $curso->dias,
-            $curso->cargaHoraria,
-            $request->horasPorDia
+        $turma->update(
+            $request->except(['_token', 'docentes', 'alunos'])
         );
-
-        $turma->update([
-            'curso_id'    => $curso->id,
-            'dataInicio'  => $request->dataInicio,
-            'dataFim'     => $dataFim,
-            'horasPorDia' => $request->horasPorDia,
-            'turno'       => $request->turno,
-            'status'      => $request->status,
-        ]);
 
         if ($request->has('docentes')) {
             $turma->docentes()->sync($request->docentes);
@@ -133,11 +119,11 @@ class turmaController extends Controller
         }
 
         return redirect('/turmas');
-    }
+    } //fim do metodo atualizar
 
     public function excluirTurma($id)
     {
         turmaModel::where('id', $id)->delete();
         return redirect('/turmas');
-    }
-}
+    } //fim do metodo excluir
+}//fim da classe

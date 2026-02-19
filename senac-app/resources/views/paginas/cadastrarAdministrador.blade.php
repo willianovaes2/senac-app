@@ -4,7 +4,7 @@
 
         <div class="mb3">
             <label class="form-label">Nome</label>
-            <input type="text" name="nomeAdministrador" class="form-control" id="nomeAdministrador"></input>
+            <input type="text" name="nome" class="form-control" id="nome"></input>
         </div>
 
         <div class="mb3">

@@ -1,6 +1,5 @@
 <x-layout titulo="Alunos - Senac">
     <div class="container-xl py-4 shadow">
-
         <!-- Abas -->
         <ul class="nav nav-pills gap-2 mb-4">
             <li class="nav-item">
@@ -184,14 +183,12 @@
 
                         <div class="modal-body">
                             <div class="row">
-
                                 <!-- Nome -->
                                 <div class="col">
                                     <label class="form-label fw-semibold">Nome Completo *</label>
                                     <input type="text" name="nomeAluno" class="form-control"
-                                        placeholder="Nome completo do aluno" required>
+                                        value="{{ old('nomeAluno') }}" placeholder="Nome completo do aluno" required>
                                 </div>
-
                             </div>
 
                             <div class="row">
@@ -213,21 +210,29 @@
                                 <!-- RA do Aluno -->
                                 <div class="col">
                                     <label class="form-label fw-semibold">RA (Registro Acadêmico) *</label>
-                                    <input type="text" name="ra" class="form-control" placeholder="1140279318" required>
+                                    <input type="text" class="form-control" value="Gerado automáticamente" disabled>
                                 </div>
                                 <!-- CPF -->
                                 <div class="col">
                                     <label class="form-label fw-semibold">CPF *</label>
-                                    <input type="text" name="cpf" class="form-control" placeholder="000.000.000-00"
-                                        required>
+                                    <input type="text" name="cpf" class="form-control" placeholder="000.000.000-00" value="{{ old('cpf') }}" required>
+                                    @error('cpf')
+                                    <small style="color:red;">{{ $message }}</small>
+                                    @enderror
                                 </div>
+
                             </div>
 
                             <div class="row">
                                 <!-- Data de Nascimento -->
+                                @if ($errors->has('dataNascimento'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('dataNascimento') }}
+                                </div>
+                                @endif
                                 <div class="col">
                                     <label class="form-label fw-semibold">Data de Nascimento *</label>
-                                    <input type="date" name="dataNascimento" class="form-control" required>
+                                    <input type="date" name="dataNascimento" class="form-control" max="{{ now()->subYears(15)->format('Y-m-d') }}" required>
                                 </div>
                                 <!-- Data de Matrícula -->
                                 <div class="col">
@@ -242,7 +247,7 @@
                                 <div class="col">
                                     <label class="form-label fw-semibold">Endereço *</label>
                                     <input type="text" name="endereco" class="form-control"
-                                        placeholder="Rua, número, bairro, cidade" required>
+                                        value="{{ old('endereco') }}" placeholder="Rua, número, bairro, cidade" required>
                                 </div>
                             </div>
 
@@ -251,14 +256,16 @@
                                 <div class="col">
                                     <label class="form-label fw-semibold">Telefone *</label>
                                     <input type="text" name="telefone" class="form-control"
-                                        placeholder="(00) 00000-0000" required>
+                                        value="{{ old('telefone') }}" placeholder="(00) 00000-0000" required>
                                 </div>
 
                                 <!-- Email -->
                                 <div class="col">
                                     <label class="form-label fw-semibold">Email *</label>
-                                    <input type="text" name="emailAluno" class="form-control"
-                                        placeholder="email@senacsp.edu.br" required>
+                                    <input type="text" name="emailAluno" class="form-control" value="{{ old('emailAluno') }}" placeholder="email@senacsp.edu.br" required>
+                                    @error('emailAluno')
+                                    <small style="color:red;">{{ $message }}</small>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -266,9 +273,9 @@
                                 <!-- Carga Horária Diária -->
                                 <div class="col">
                                     <label class="form-label fw-semibold">Tipo de Matrícula *</label>
-                                    <select name="tipo" class="form-select">
-                                        <option value="pagante" selected>Pagante</option>
-                                        <option value="bolsista">Bolsista</option>
+                                    <select name="tipo" class="form-select" required>
+                                        <option value="pagante {{ old('tipo') == 'pagante' ? 'selected' : '' }}">Pagante</option>
+                                        <option value="bolsista {{ old('tipo') == 'bolsista' ? 'selected' : '' }}">Bolsista</option>
                                     </select>
                                 </div>
 
@@ -285,14 +292,24 @@
                             <div class="row">
                                 <div class="col">
                                     <label class="form-label fw-semibold">Senha</label>
-                                    <input type="text" name="senhaAluno" class="form-control" placeholder="Informe a senha do aluno" required>
+                                    <input type="text" name="senhaAluno" class="form-control" value="{{ old('senhaAluno') }}" placeholder="Informe a senha do aluno" required>
                                 </div>
 
                                 <div class="col">
 
                                 </div>
                             </div>
+
+                            <div class="alert alert-primary d-flex align-items-start gap-2 mt-3">
+                                <i class="bi bi-info-circle"></i>
+                                <div class="w-75">
+                                    <strong>Nota:</strong>
+                                     O e-mail e o CPF devem ser únicos. Não será permitido cadastro com dados já existentes.
+                                </div>
+                            </div>
+
                         </div>
+
 
 
                         <!-- Footer -->
@@ -304,16 +321,26 @@
                                 Salvar
                             </button>
                         </div>
-
+                        @if (session('success'))
+                        <div style="background:#d4edda; color:#155724; padding:10px; border-radius:5px;">
+                            {{ session('success') }}
+                        </div>
+                        @endif
                     </form>
-                    @if ($errors->has('cpf'))
-                    <div class="alert alert-danger">
-                        {{ $errors->first('cpf') }}
-                    </div>
-                    @endif
+
                 </div>
             </div>
         </div>
         <!-- FIM DO MODAL -->
     </div>
+    @if ($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = new bootstrap.Modal(
+                document.getElementById('modalNovoAluno')
+            );
+            modal.show();
+        });
+    </script>
+    @endif
 </x-layout>

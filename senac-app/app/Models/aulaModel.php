@@ -1,16 +1,18 @@
 <?php
- 
+
 namespace App\Models;
- 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
- 
+use App\Models\turmaModel;
+
+
 class aulaModel extends Model
 {
     use HasFactory;
- 
+
     protected $table = 'aulas';
- 
+
     protected $fillable = [
         'curso_id',
         'uc_id',
@@ -18,9 +20,9 @@ class aulaModel extends Model
         'status',
         'docente_responsavel_id',
     ];
- 
+
     // RELACIONAMENTOS
- 
+
     // Turmas vinculadas à aula
     public function turmas()
     {
@@ -31,7 +33,7 @@ class aulaModel extends Model
             'turma_id'
         );
     }
- 
+
     // Docentes adicionais vinculados à aula
     public function docentes()
     {
@@ -42,19 +44,19 @@ class aulaModel extends Model
             'docente_id'
         );
     }
- 
+
     // Curso da aula
     public function curso()
     {
         return $this->belongsTo(cursoModel::class, 'curso_id');
     }
- 
+
     // UC da aula
     public function uc()
     {
         return $this->belongsTo(ucModel::class, 'uc_id');
     }
- 
+
     // Docente responsável pela aula
     public function docenteResponsavel()
     {
@@ -65,14 +67,33 @@ class aulaModel extends Model
             'nomeDocente' => 'Sem docente'
         ]);
     }
- 
+
     // STATUS CALCULADO (SEM SALVAR NO BANCO)
     public function getStatusCalculadoAttribute()
     {
         $hoje = date('Y-m-d');
- 
+
         if ($this->dia > $hoje) return 'prevista';
         if ($this->dia == $hoje) return 'andamento';
         return 'pendente';
+    }
+
+    public function alunos()
+    {
+        return $this->belongsToMany(
+            alunoModel::class,
+            'aula_aluno',
+            'aula_id',
+            'aluno_id'
+        )->withPivot('presenca', 'conceito_final')
+            ->withTimestamps();
+    }
+    public function avaliacoesParciais()
+    {
+        return $this->hasMany(avaliacaoParcialModel::class, 'aula_id');
+    }
+    public function turma()
+    {
+        return $this->belongsTo(turmaModel::class, 'turma_id');
     }
 }

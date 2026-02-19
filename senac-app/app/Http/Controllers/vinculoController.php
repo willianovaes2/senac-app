@@ -2,30 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\alunoModel;
+use App\Models\turmaModel;
+use App\Models\cursoModel;
+use App\Models\ucModel;
+use App\Models\docenteModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\turmaModel;
-use App\Models\alunoModel;
-use App\Models\cursoModel;
-use App\Models\docenteModel;
-use App\Models\ucModel;
+
 
 class vinculoController extends Controller
 {
     public function index()
     {
         return view('paginas.dashboardAdm', [
- 
+
             'totalCursos' => cursoModel::count(),
             'totalDocentes' => docenteModel::count(),
             'totalAlunos' => alunoModel::count(),
             'turmasAtivas' => turmaModel::count(),
- 
+
             'cursos' => cursoModel::all(),
             'docentes' => docenteModel::all(),
             'ucs' => ucModel::all(),
             'turmas' => turmaModel::withCount('alunos')->get(),
- 
+
             'alunoTurmas' => DB::table('aluno_turma')
             ->join('aluno', 'aluno.id', '=', 'aluno_turma.aluno_id')
             ->join('turma', 'turma.id', '=', 'aluno_turma.turma_id')
@@ -35,79 +36,112 @@ class vinculoController extends Controller
                 'turma.codigoTurma'
             )
             ->get(),
-            'cursoUcs' => DB::table('curso_uc')->get(),
-            'docenteCursos' => DB::table('docente_curso')->get(),
-            'docenteUcs' => DB::table('docente_uc')->get(),
-            'docenteTurmas' => DB::table('docente_turma')->get(),
+            'cursoUcs' => DB::table('curso_uc')
+                ->join('uc', 'uc.id', '=', 'curso_uc.uc_id')
+                ->join('curso', 'curso.id', '=', 'curso_uc.curso_id')
+                ->select(
+                    'curso_uc.id',
+                    'uc.codigoUc',
+                    'curso.nome as nomeCurso'
+                )
+                ->get(),
+            'docenteCursos' => DB::table('docente_curso')
+                ->join('curso', 'curso.id', '=', 'docente_curso.curso_id')
+                ->join('docente', 'docente.id', '=', 'docente_curso.docente_id')
+                ->select(
+                    'docente_curso.id',
+                    'docente.nomeDocente',
+                    'curso.nome as nomeCurso'
+                )
+                ->get(),
+            'docenteUcs' => DB::table('docente_uc')
+                ->join('uc', 'uc.id', '=', 'docente_uc.uc_id')
+                ->join('docente', 'docente.id', '=', 'docente_uc.docente_id')
+                ->select(
+                    'docente_uc.id',
+                    'docente.nomeDocente',
+                    'uc.codigoUc'
+                )
+                ->get(),
+            'docenteTurmas' => DB::table('docente_turma')
+                ->join('turma', 'turma.id', '=', 'docente_turma.turma_id')
+                ->join('docente', 'docente.id', '=', 'docente_turma.docente_id')
+                ->select(
+                    'docente_turma.id',
+                    'docente.nomeDocente',
+                    'turma.codigoTurma'
+                )
+                ->get(),
         ]);
     }
-    // Aluno -> Turma
-    public function alunoTurma(Request $request)
-    {
-        $request->validate([
-            'aluno_id' => 'required',
-            'turma_id' => 'required',
-        ]);
 
-        $turma = turmaModel::findOrFail($request->turma_id);
-        $turma->alunos()->syncWithoutDetaching([$request->aluno_id]);
-
-        return back()->with('successo', 'Aluno vinculado à Turma');
-    }
-
-    // Curso -> UCs (1 curso, várias UCs)
-    public function cursoUc(Request $request)
-    {
-        $request->validate([
-            'curso_id' => 'required',
-            'ucs' => 'required|array',
-        ]);
-
-        ucModel::whereIn('id', $request->ucs)
-            ->update(['cursoCodigo' => $request->curso_id]);
-
-        return back()->with('successo', 'UCs vinculadas ao Curso');
-    }
-
-    // Docente -> Cursos (N:N)
     public function docenteCurso(Request $request)
     {
         $request->validate([
-            'docente_id' => 'required',
+            'docente_id' => 'required|exists:docente,id',
             'cursos' => 'required|array'
         ]);
 
-        $docente = docenteModel::findOrFail($request->docente_id);
-        $docente->cursos()->sync($request->cursos);
+        $docente = docenteModel::find($request->docente_id);
 
-        return back()->with('successo', 'Cursos vinculados ao Docente');
+        $docente->cursos()->syncWithoutDetaching($request->cursos);
+
+        return redirect()->back()->with('success', 'Vínculo realizado com sucesso!');
     }
 
-    // Docente -> UC (N:N)
     public function docenteUc(Request $request)
     {
         $request->validate([
-            'uc_id' => 'required',
+            'uc_id' => 'required|exists:uc,id',
             'docentes' => 'required|array'
         ]);
 
-        $uc = ucModel::findOrFail($request->uc_id);
-        $uc->docentes()->sync($request->docentes);
+        $uc = ucModel::find($request->uc_id);
 
-        return back()->with('successo', 'Docentes vinculados à UC');
+        $uc->docentes()->syncWithoutDetaching($request->docentes);
+
+        return redirect()->back()->with('success', 'Vínculo realizado com sucesso!');
     }
 
-    // Docente -> Turmas (N:N)
     public function docenteTurma(Request $request)
     {
         $request->validate([
-            'docente_id' => 'required',
+            'docente_id' => 'required|exists:docente,id',
             'turmas' => 'required|array'
         ]);
 
-        $docente = docenteModel::findOrFail($request->docente_id);
-        $docente->turmas()->sync($request->turmas);
+        $docente = docenteModel::find($request->docente_id);
 
-        return back()->with('successo', 'Turmas vinculadas ao Docente');
+        $docente->turmas()->syncWithoutDetaching($request->turmas);
+
+        return redirect()->back()->with('success', 'Vínculo realizado com sucesso!');
+    }
+
+    public function alunoTurma(Request $request)
+    {
+        $request->validate([
+            'aluno_id' => 'required|exists:aluno,id',
+            'turmas' => 'required|array'
+        ]);
+
+        $aluno = alunoModel::find($request->aluno_id);
+
+        $aluno->turmas()->syncWithoutDetaching($request->turmas);
+
+        return redirect()->back()->with('success', 'Vínculo realizado com sucesso!');
+    }
+
+    public function cursoUcs(Request $request)
+    {
+        $request->validate([
+            'curso_id' => 'required|exists:curso,id',
+            'ucs' => 'required|array'
+        ]);
+
+        $curso = cursoModel::find($request->curso_id);
+
+        $curso->ucs()->syncWithoutDetaching($request->ucs);
+
+        return redirect()->back()->with('success', 'Vínculo realizado com sucesso!');
     }
 }

@@ -9,16 +9,20 @@ class alunoModel extends Model
 {
     use HasFactory;
     protected $table = 'aluno';
-
-    public function turmas()
-    {
-        return $this->belongsToMany(
-            turmaModel::class,
-            'aluno_turma',
-            'aluno_id',
-            'turma_id'
-        );
-    }
+    protected $fillable = [
+        'nomeAluno',
+        'intencao',
+        'ra',
+        'cpf',
+        'dataNascimento',
+        'telefone',
+        'emailAluno',
+        'senhaAluno',
+        'endereco',
+        'dataMatricula',
+        'tipo',
+        'status',
+    ];
 
     /*
      * Gera o RA automaticamente antes de salvar
@@ -47,13 +51,29 @@ class alunoModel extends Model
         return $ra;
     }
 
-    public function ucs()
+    public function turmas()
     {
         return $this->belongsToMany(
-            cursoModel::class,
-            'aluno_curso', // nome da tabela pivô
+            turmaModel::class,
+            'aluno_turma',
             'aluno_id',
-            'curso_id'
+            'turma_id'
         );
+    }
+
+    public function aulas()
+    {
+        return $this->belongsToMany(
+            aulaModel::class,
+            'aula_aluno',
+            'aluno_id',
+            'aula_id'
+        )->withPivot('presente', 'conceito_final')
+            ->withTimestamps();
+    }
+
+    public function avaliacoesParciais()
+    {
+        return $this->hasMany(avaliacaoParcialModel::class, 'aluno_id');
     }
 }

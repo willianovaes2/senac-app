@@ -1,11 +1,9 @@
 <x-layout titulo="Dashboard - Senac">
     <div class="container-xl py-4 shadow">
         <!-- Abas -->
-
         <ul class="nav nav-pills gap-2 mb-4">
             <li class="nav-item">
-                <a class="btn btn-primary active" href="dashboardAdm"><i class="bi bi-bar-chart"></i>
-                    Dashboard</a>
+                <a class="btn btn-primary active" href="dashboardAdm"><i class="bi bi-bar-chart"></i></i> Dashboard</a>
             </li>
             <li class="nav-item">
                 <a class="btn btn-primary" href="cursos"><i class="bi bi-backpack"></i> Cursos</a>
@@ -31,10 +29,11 @@
                     Indicadores</a>
             </li>
             <li class="nav-item">
-                <a class="btn btn-primary" href="relatórios"><i class="bi bi-clipboard-data"></i>
+                <a class="btn btn-primary" href="relatorios"><i class="bi bi-clipboard-data"></i>
                     Relatórios</a>
             </li>
         </ul>
+
 
         <!-- Conteúdo Principal Dashboard -->
 
@@ -140,6 +139,7 @@
                 </div>
             </div>
 
+
             <!-- Gestão de vínculos -->
             <div class="card shadow-sm">
                 <div class="card-body">
@@ -153,7 +153,8 @@
 
                     <div class="row g-3">
                         <div class="col-md-4">
-                            <a data-bs-toggle="modal" data-bs-target="#modalAlunoTurmas"
+                            <!-- ALTERADO: adicionado # -->
+                            <a data-bs-toggle="modal" data-bs-target="#modalAlunoTurma"
                                 class="btn btn-light border-black w-100 text-start py-3" style="color: black;">
                                 <i class="bi bi-person-lines-fill me-2"></i>
                                 <strong>Aluno → Turma</strong><br>
@@ -162,16 +163,22 @@
                         </div>
 
                         <div class="col-md-4">
+                            <!-- ALTERADO: adicionado # -->
                             <a data-bs-toggle="modal" data-bs-target="#modalVincularUC"
                                 class="btn btn-light border-black w-100 text-start py-3" style="color: black;">
                                 <i class="bi bi-journal-bookmark me-2"></i>
-                                <strong>Curso → UCs</strong><br>
+                                <strong>UCs → Curso</strong><br>
                                 <small>Vincular UCs ao curso</small>
                             </a>
                         </div>
 
-                        <div data-bs-toggle="modal" data-bs-target="#modalVincularDocente" class="col-md-4">
-                            <a href="#" class="btn btn-light border-black w-100 text-start py-3" style="color: black;">
+                        <!-- ALTERADO: movi data-bs-toggle e data-bs-target para o <a> -->
+                        <div class="col-md-4">
+                            <a href="#"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalVincularDocenteCurso"
+                                class="btn btn-light border-black w-100 text-start py-3"
+                                style="color: black;">
                                 <i class="bi bi-mortarboard me-2"></i>
                                 <strong>Docente → Cursos</strong><br>
                                 <small>Atribuir a cursos</small>
@@ -179,7 +186,8 @@
                         </div>
 
                         <div class="col-md-4">
-                            <a data-bs-toggle="modal" data-bs-target="#modalVincularDocentesUC"
+                            <!-- ALTERADO: adicionado # -->
+                            <a data-bs-toggle="modal" data-bs-target="#modalVincularDocenteUC"
                                 class="btn btn-light border-black w-100 text-start py-3" style="color: black;">
                                 <i class="bi bi-people me-2"></i>
                                 <strong>Docentes → UC</strong><br>
@@ -188,6 +196,7 @@
                         </div>
 
                         <div class="col-md-4">
+                            <!-- ALTERADO: adicionado # -->
                             <a data-bs-toggle="modal" data-bs-target="#modalVincularDocenteTurma"
                                 class="btn btn-light border-black w-100 text-start py-3" style="color: black;">
                                 <i class="bi bi-diagram-2 me-2"></i>
@@ -197,235 +206,236 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Filtro -->
-                <div class="d-flex justify-content-start align-items-center mb-3 gap-3 flex-wrap m-4">
+            <!-- Filtro -->
+            <div class="d-flex justify-content-center align-items-center mb-3 gap-3 flex-wrap m-4">
 
-                    <div class="filter-tabs btn-group shadow-sm">
-                        <button class="btn btn-light active" data-filter="aluno-turma">
-                            Aluno → Turma
-                        </button>
+                <div class="filter-tabs btn-group shadow-sm">
+                    <button class="btn btn-light active" data-filter="aluno-turma">
+                        Aluno → Turma
+                    </button>
 
-                        <button class="btn btn-light" data-filter="curso-uc">
-                            Cursos → UCs
-                        </button>
+                    <button class="btn btn-light" data-filter="curso-uc">
+                        UCs → Curso
+                    </button>
 
-                        <button class="btn btn-light" data-filter="docente-curso">
-                            Docentes → Cursos
-                        </button>
+                    <button class="btn btn-light" data-filter="docente-curso">
+                        Docentes → Curso
+                    </button>
 
-                        <button class="btn btn-light" data-filter="docente-uc">
-                            Docentes → UCs
-                        </button>
+                    <button class="btn btn-light" data-filter="docente-uc">
+                        Docentes → UCs
+                    </button>
 
-                        <button class="btn btn-light" data-filter="docente-turma">
-                            Docentes → Turmas
-                        </button>
+                    <button class="btn btn-light" data-filter="docente-turma">
+                        Docentes → Turmas
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="relacionamento" data-tipo="aluno-turma">
+
+                <div class="d-flex align-items-center justify-content-between px-4">
+                    <div>
+                        <h5 class="fw-bold">Aluno → Turma</h5>
                     </div>
                 </div>
 
-                <div class="relacionamento" data-tipo="aluno-turma">
+                <div class="card shadow-sm rounded-2 m-4">
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="text-muted">Código</th>
+                                    <th class="text-muted">Aluno</th>
+                                    <th class="text-muted">Turma</th>
+                                    <th class="text-muted text-center">Ações</th>
+                                </tr>
+                            </thead>
 
-                    <div class="d-flex align-items-center justify-content-between px-4">
-                        <div>
-                            <h5 class="fw-bold">Aluno → Turma</h5>
-                        </div>
-                    </div>
-
-                    <div class="card shadow-sm rounded-2 m-4">
-                        <div class="table-responsive">
-                            <table class="table align-middle">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th class="text-muted">Código</th>
-                                        <th class="text-muted">Aluno</th>
-                                        <th class="text-muted">Turma</th>
-                                        <th class="text-muted text-center">Ações</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    @foreach ($alunoTurmas as $vinculo)
-                                    <tr>
-                                        <td>{{ $vinculo->id }}</td>
-                                        <td>{{ $vinculo->nomeAluno }}</td>
-                                        <td>{{ $vinculo->codigoTurma }}</td>
-                                        <td class="text-center">
-                                            <a href="#" class="btn btn-sm btn-outline-danger">
-                                                <i class="bi bi-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <div class="relacionamento d-none" data-tipo="curso-uc">
-
-                    <div class="d-flex align-items-center justify-content-between px-4">
-                        <div>
-                            <h5 class="fw-bold">UCs → Cursos</h5>
-                        </div>
-                    </div>
-
-                    <div class="card shadow-sm rounded-2 m-4">
-                        <div class="table-responsive">
-                            <table class="table align-middle">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th class="text-muted">Código</th>
-                                        <th class="text-muted">Uc</th>
-                                        <th class="text-muted">Curso</th>
-                                        <th class="text-muted text-center">Ações</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    @foreach ($cursoUcs as $vinculo)
-                                    <tr>
-                                        <td>{{ $vinculo->id }}</td>
-                                        <td>{{ $vinculo->codigoUc }}</td>
-                                        <td>{{ $vinculo->nomeCurso }}</td>
-                                        <td class="text-center">
-                                            <a href="#" class="btn btn-sm btn-outline-danger">
-                                                <i class="bi bi-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <div class="relacionamento d-none" data-tipo="docente-curso">
-
-                    <div class="d-flex align-items-center justify-content-between px-4">
-                        <div>
-                            <h5 class="fw-bold">Docentes → Cursos</h5>
-                        </div>
-                    </div>
-
-                    <div class="card shadow-sm rounded-2 m-4">
-                        <div class="table-responsive">
-                            <table class="table align-middle">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th class="text-muted">Código</th>
-                                        <th class="text-muted">Docente</th>
-                                        <th class="text-muted">Curso</th>
-                                        <th class="text-muted text-center">Ações</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    @foreach ($docenteCursos as $vinculo)
-                                    <tr>
-                                        <td>{{ $vinculo->id }}</td>
-                                        <td>{{ $vinculo->nomeDocente }}</td>
-                                        <td>{{ $vinculo->nomeCurso }}</td>
-                                        <td class="text-center">
-                                            <a href="#" class="btn btn-sm btn-outline-danger">
-                                                <i class="bi bi-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="relacionamento d-none" data-tipo="docente-uc">
-
-                    <div class="d-flex align-items-center justify-content-between px-4">
-                        <div>
-                            <h5 class="fw-bold">Docentes → UCs</h5>
-                        </div>
-                    </div>
-
-                    <div class="card shadow-sm rounded-2 m-4">
-                        <div class="table-responsive">
-                            <table class="table align-middle">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th class="text-muted">Código</th>
-                                        <th class="text-muted">Docente</th>
-                                        <th class="text-muted">UC</th>
-                                        <th class="text-muted text-center">Ações</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    @foreach ($docenteUcs as $vinculo)
-                                    <tr>
-                                        <td>{{ $vinculo->id }}</td>
-                                        <td>{{ $vinculo->nomeDocente }}</td>
-                                        <td>{{ $vinculo->codigoUc}}</td>
-                                        <td class="text-center">
-                                            <a href="#" class="btn btn-sm btn-outline-danger">
-                                                <i class="bi bi-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="relacionamento d-none" data-tipo="docente-turma">
-
-                    <div class="d-flex align-items-center justify-content-between px-4">
-                        <div>
-                            <h5 class="fw-bold">Docentes → Turmas</h5>
-                        </div>
-                    </div>
-
-                    <div class="card shadow-sm rounded-2 m-4">
-                        <div class="table-responsive">
-                            <table class="table align-middle">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th class="text-muted">Código</th>
-                                        <th class="text-muted">Docente</th>
-                                        <th class="text-muted">Turma</th>
-                                        <th class="text-muted text-center">Ações</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    @foreach ($docenteTurmas as $vinculo)
-                                    <tr>
-                                        <td>{{ $vinculo->id }}</td>
-                                        <td>{{ $vinculo->nomeDocente }}</td>
-                                        <td>{{ $vinculo->codigoTurma}}</td>
-                                        <td class="text-center">
-                                            <a href="/vinculos/removerDocenteTurma" class="btn btn-sm btn-outline-danger">
-                                                <i class="bi bi-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                            <tbody>
+                                @foreach ($alunoTurmas as $vinculo)
+                                <tr>
+                                    <td>{{ $vinculo->id }}</td>
+                                    <td>{{ $vinculo->nomeAluno }}</td>
+                                    <td>{{ $vinculo->codigoTurma }}</td>
+                                    <td class="text-center">
+                                        <a href="#" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
             </div>
+
+
+            <div class="relacionamento d-none" data-tipo="curso-uc">
+
+                <div class="d-flex align-items-center justify-content-between px-4">
+                    <div>
+                        <h5 class="fw-bold">UCs → Cursos</h5>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm rounded-2 m-4">
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="text-muted">Código</th>
+                                    <th class="text-muted">Uc</th>
+                                    <th class="text-muted">Curso</th>
+                                    <th class="text-muted text-center">Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach ($cursoUcs as $vinculo)
+                                <tr>
+                                    <td>{{ $vinculo->id }}</td>
+                                    <td>{{ $vinculo->codigoUc }}</td>
+                                    <td>{{ $vinculo->nomeCurso }}</td>
+                                    <td class="text-center">
+                                        <a href="#" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="relacionamento d-none" data-tipo="docente-curso">
+
+                <div class="d-flex align-items-center justify-content-between px-4">
+                    <div>
+                        <h5 class="fw-bold">Docentes → Cursos</h5>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm rounded-2 m-4">
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="text-muted">Código</th>
+                                    <th class="text-muted">Docente</th>
+                                    <th class="text-muted">Curso</th>
+                                    <th class="text-muted text-center">Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach ($docenteCursos as $vinculo)
+                                <tr>
+                                    <td>{{ $vinculo->id }}</td>
+                                    <td>{{ $vinculo->nomeDocente }}</td>
+                                    <td>{{ $vinculo->nomeCurso }}</td>
+                                    <td class="text-center">
+                                        <a href="#" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="relacionamento d-none" data-tipo="docente-uc">
+
+                <div class="d-flex align-items-center justify-content-between px-4">
+                    <div>
+                        <h5 class="fw-bold">Docentes → UCs</h5>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm rounded-2 m-4">
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="text-muted">Código</th>
+                                    <th class="text-muted">Docente</th>
+                                    <th class="text-muted">UC</th>
+                                    <th class="text-muted text-center">Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach ($docenteUcs as $vinculo)
+                                <tr>
+                                    <td>{{ $vinculo->id }}</td>
+                                    <td>{{ $vinculo->nomeDocente }}</td>
+                                    <td>{{ $vinculo->codigoUc}}</td>
+                                    <td class="text-center">
+                                        <a href="#" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="relacionamento d-none" data-tipo="docente-turma">
+
+                <div class="d-flex align-items-center justify-content-between px-4">
+                    <div>
+                        <h5 class="fw-bold">Docentes → Turmas</h5>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm rounded-2 m-4">
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="text-muted">Código</th>
+                                    <th class="text-muted">Docente</th>
+                                    <th class="text-muted">Turma</th>
+                                    <th class="text-muted text-center">Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach ($docenteTurmas as $vinculo)
+                                <tr>
+                                    <td>{{ $vinculo->id }}</td>
+                                    <td>{{ $vinculo->nomeDocente }}</td>
+                                    <td>{{ $vinculo->codigoTurma}}</td>
+                                    <td class="text-center">
+                                        <a href="/vinculos/removerDocenteTurma" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </section>
 
 
@@ -442,7 +452,9 @@
 
                     <!-- Form -->
                     <form action="/inserir" method="POST">
+
                         @csrf
+
                         <div class="modal-body">
                             <div class="row g-3">
                                 <!-- Nome -->
@@ -580,16 +592,7 @@
                         </div>
 
                     </form>
-                    @if ($errors->any())
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            const modal = new bootstrap.Modal(
-                                document.getElementById('modalNovoCurso')
-                            );
-                            modal.show();
-                        });
-                    </script>
-                    @endif
+
                 </div>
             </div>
         </div>
@@ -608,6 +611,7 @@
 
                     <!-- Form -->
                     <form action="/inserirDocente" method="POST" id="form-docente">
+
                         @csrf
 
                         <div class="modal-body">
@@ -712,49 +716,50 @@
                                         <option value="inativo">Inativo</option>
                                     </select>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col">
-                                    <!-- Turno de Trabalho -->
-                                    <label class="form-label fw-semibold">Turnos</label>
+                                <div class="row">
+                                    <div class="col">
+                                        <!-- Turno de Trabalho -->
+                                        <label class="form-label fw-semibold">Turnos</label>
 
-                                    @if ($errors->has('turnos'))
-                                    <div class="text-danger small mb-2">
-                                        {{ $errors->first('turnos') }}
+                                        @if ($errors->has('turnos'))
+                                        <div class="text-danger small mb-2">
+                                            {{ $errors->first('turnos') }}
+                                        </div>
+                                        @endif
+
+
+                                        <div class="lista-scroll">
+                                            <div class="form-check">
+                                                <input class="form-check-input turno-checkbox"
+                                                    type="checkbox" name="turno[]"
+                                                    value="manha" id="manha">
+                                                <label class="form-check-label" for="manha">
+                                                    Manhã
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input turno-checkbox"
+                                                    type="checkbox" name="turno[]"
+                                                    value="tarde" id="tarde">
+                                                <label class="form-check-label" for="tarde">
+                                                    Tarde
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input turno-checkbox"
+                                                    type="checkbox" name="turno[]"
+                                                    value="noite" id="noite">
+                                                <label class="form-check-label" for="noite">
+                                                    Noite
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    @endif
 
-                                    <div class="lista-scroll">
-                                        <div class="form-check">
-                                            <input class="form-check-input turno-checkbox"
-                                                type="checkbox" name="turno[]"
-                                                value="manha" id="manha">
-                                            <label class="form-check-label" for="manha">
-                                                Manhã
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input turno-checkbox"
-                                                type="checkbox" name="turno[]"
-                                                value="tarde" id="tarde">
-                                            <label class="form-check-label" for="tarde">
-                                                Tarde
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input turno-checkbox"
-                                                type="checkbox" name="turno[]"
-                                                value="noite" id="noite">
-                                            <label class="form-check-label" for="noite">
-                                                Noite
-                                            </label>
-                                        </div>
+                                    <div class="col">
+
                                     </div>
-                                </div>
-
-                                <div class="col">
-
                                 </div>
                             </div>
                         </div>
@@ -770,6 +775,7 @@
                         </div>
 
                     </form>
+
                 </div>
             </div>
         </div>
@@ -815,553 +821,537 @@
                                         @endforeach
                                     </select>
                                 </div>
+
+                                <div class="row">
+                                    <!-- RA do Aluno -->
+                                    <div class="col">
+                                        <label class="form-label fw-semibold">RA (Registro Acadêmico) *</label>
+                                        <input type="text" name="ra" class="form-control" placeholder="1140279318" required>
+                                    </div>
+                                    <!-- CPF -->
+                                    <div class="col">
+                                        <label class="form-label fw-semibold">CPF *</label>
+                                        <input type="text" name="cpf" class="form-control" placeholder="000.000.000-00"
+                                            required>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <!-- Data de Nascimento -->
+                                    <div class="col">
+                                        <label class="form-label fw-semibold">Data de Nascimento *</label>
+                                        <input type="date" name="dataNascimento" class="form-control" required>
+                                    </div>
+                                    <!-- Data de Matrícula -->
+                                    <div class="col">
+                                        <label class="form-label fw-semibold">Data de Matrícula</label>
+                                        <input type="text" class="form-control" value="{{ now()->format('d/m/Y') }}"
+                                            readonly>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <!-- Endereço -->
+                                    <div class="col">
+                                        <label class="form-label fw-semibold">Endereço *</label>
+                                        <input type="text" name="endereco" class="form-control"
+                                            placeholder="Rua, número, bairro, cidade" required>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <!-- Telefone -->
+                                    <div class="col">
+                                        <label class="form-label fw-semibold">Telefone *</label>
+                                        <input type="text" name="telefone" class="form-control"
+                                            placeholder="(00) 00000-0000" required>
+                                    </div>
+
+                                    <!-- Email -->
+                                    <div class="col">
+                                        <label class="form-label fw-semibold">Email *</label>
+                                        <input type="text" name="emailAluno" class="form-control"
+                                            placeholder="email@senacsp.edu.br" required>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <!-- Carga Horária Diária -->
+                                    <div class="col">
+                                        <label class="form-label fw-semibold">Tipo de Matrícula *</label>
+                                        <select name="tipo" class="form-select">
+                                            <option value="pagante" selected>Pagante</option>
+                                            <option value="bolsista">Bolsista</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Status -->
+                                    <div class="col">
+                                        <label class="form-label fw-semibold">Status</label>
+                                        <select name="status" class="form-select">
+                                            <option value="ativo" selected>Ativo</option>
+                                            <option value="inativo">Inativo</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="form-label fw-semibold">Senha</label>
+                                            <input type="text" name="senhaAluno" class="form-control" placeholder="Informe a senha do aluno" required>
+                                        </div>
+
+                                        <div class="col">
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="row">
-                                <!-- RA do Aluno -->
-                                <div class="col">
-                                    <label class="form-label fw-semibold">RA (Registro Acadêmico) *</label>
-                                    <input type="text" name="ra" class="form-control" placeholder="1140279318" required>
-                                </div>
-                                <!-- CPF -->
-                                <div class="col">
-                                    <label class="form-label fw-semibold">CPF *</label>
-                                    <input type="text" name="cpf" class="form-control" placeholder="000.000.000-00"
-                                        required>
-                                </div>
+
+                            <!-- Footer -->
+                            <div class="modal-footer border-0 filter-tabs">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                                    Cancelar
+                                </button>
+                                <button type="submit" class="btn btn-warning text-white px-4">
+                                    Salvar
+                                </button>
                             </div>
 
-                            <div class="row">
-                                <!-- Data de Nascimento -->
-                                <div class="col">
-                                    <label class="form-label fw-semibold">Data de Nascimento *</label>
-                                    <input type="date" name="dataNascimento" class="form-control" required>
-                                </div>
-                                <!-- Data de Matrícula -->
-                                <div class="col">
-                                    <label class="form-label fw-semibold">Data de Matrícula</label>
-                                    <input type="text" class="form-control" value="{{ now()->format('d/m/Y') }}"
-                                        readonly>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <!-- Endereço -->
-                                <div class="col">
-                                    <label class="form-label fw-semibold">Endereço *</label>
-                                    <input type="text" name="endereco" class="form-control"
-                                        placeholder="Rua, número, bairro, cidade" required>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <!-- Telefone -->
-                                <div class="col">
-                                    <label class="form-label fw-semibold">Telefone *</label>
-                                    <input type="text" name="telefone" class="form-control"
-                                        placeholder="(00) 00000-0000" required>
-                                </div>
-
-                                <!-- Email -->
-                                <div class="col">
-                                    <label class="form-label fw-semibold">Email *</label>
-                                    <input type="text" name="emailAluno" class="form-control"
-                                        placeholder="email@senacsp.edu.br" required>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <!-- Carga Horária Diária -->
-                                <div class="col">
-                                    <label class="form-label fw-semibold">Tipo de Matrícula *</label>
-                                    <select name="tipo" class="form-select">
-                                        <option value="pagante" selected>Pagante</option>
-                                        <option value="bolsista">Bolsista</option>
-                                    </select>
-                                </div>
-
-                                <!-- Status -->
-                                <div class="col">
-                                    <label class="form-label fw-semibold">Status</label>
-                                    <select name="status" class="form-select">
-                                        <option value="ativo" selected>Ativo</option>
-                                        <option value="inativo">Inativo</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col">
-                                    <label class="form-label fw-semibold">Senha</label>
-                                    <input type="text" name="senhaAluno" class="form-control" placeholder="Informe a senha do aluno" required>
-                                </div>
-
-                                <div class="col">
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Footer -->
-                        <div class="modal-footer border-0 filter-tabs">
-                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">
-                                Cancelar
-                            </button>
-                            <button type="submit" class="btn btn-warning text-white px-4">
-                                Salvar
-                            </button>
-                        </div>
-
-                        @if (session('success'))
-                        <div style="background:#d4edda; color:#155724; padding:10px; border-radius:5px;">
-                            {{ session('success') }}
-                        </div>
-                        @endif
                     </form>
-                    @if ($errors->any())
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            const modal = new bootstrap.Modal(
-                                document.getElementById('modalNovoAluno')
-                            );
-                            modal.show();
-                        });
-                    </script>
-                    @endif
+
                 </div>
             </div>
         </div>
         <!-- FIM DO MODAL -->
-
-        <!-- Modal ALUNO - TURMAS -->
-
-        <!-- Modal -->
-        <div class="modal fade" id="modalAlunoTurma" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content rounded-4">
-
-                    <form action="/vinculos/alunoTurma" method="POST">
-                        @csrf
-
-                        <!-- Header -->
-                        <div class="modal-header border-0">
-                            <h5 class="modal-title fw-semibold">
-                                <i class="bi bi-mortarboard text-warning me-2"></i>
-                                Vincular Aluno a Cursos
-                            </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-
-                        <!-- Body -->
-                        <div class="modal-body">
-
-                            <!-- Aluno -->
-                            <div class="mb-3">
-                                <label class="form-label">Selecione o Aluno</label>
-                                <select name="aluno_id" class="form-select" required>
-                                    <option value="">-- Selecione um Aluno --</option>
-                                    @foreach ($alunos as $aluno)
-                                    <option value="{{ $aluno->id }}">
-                                        {{ $aluno->nomeAluno }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Turma -->
-                            <div class="mb-2">
-                                <label class="form-label">
-                                    Selecione as Turmas
-                                    <small class="text-muted">(múltipla seleção)</small>
-                                </label>
-
-                                <div class="border rounded p-3" style="max-height: 240px; overflow-y: auto;">
-                                    @foreach ($turmas as $turma)
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" value="{{ $turma->id }}" id="turma{{ $turma->id }}">
-                                        <label class="form-check-label fw-semibold text-dark" for="turma{{ $turma->id }}">
-                                            {{ $turma->codigoTurma }}
-                                            <div class="small text-muted">
-                                                {{ $turma->horasPorDia }}h
-                                            </div>
-                                        </label>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-
-                            <!-- Nota -->
-                            <div class="alert alert-primary d-flex align-items-start gap-2 mt-3">
-                                <i class="bi bi-info-circle"></i>
-                                <div>
-                                    <strong>Nota:</strong>
-                                    Um aluno pode participar de diversas turmas.
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- Footer -->
-                        <div class="modal-footer border-0">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                Cancelar
-                            </button>
-                            <button type="submit" class="btn btn-primary" id="btnVincularDocente">
-                                Vincular
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- FIM DA MODAL -->
-
-        <!-- Modal CURSO - UCs -->
-
-        <!-- Modal -->
-        <div class="modal fade" id="modalVincularUC" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content rounded-4">
-
-                    <form action="/vinculos/cursoUc" method="POST">
-                        @csrf
-
-                        <!-- Header -->
-                        <div class="modal-header border-0">
-                            <h5 class="modal-title fw-semibold">
-                                <i class="bi bi-book text-warning me-2"></i>
-                                Vincular UCs a Curso
-                            </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-
-                        <!-- Body -->
-                        <div class="modal-body">
-
-                            <!-- Curso -->
-                            <div class="mb-3">
-                                <label class="form-label">Selecione o Curso</label>
-                                <select name="curso_id" class="form-select" required>
-                                    <option value="">-- Selecione um curso --</option>
-                                    @foreach ($cursos as $curso)
-                                    <option value="{{ $curso->id }}">
-                                        {{ $curso->nome }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- UCs -->
-                            <div class="mb-2">
-                                <label class="form-label">
-                                    Selecione as UCs <small class="text-muted">(múltipla seleção)</small>
-                                </label>
-
-                                <div class="border rounded p-3" style="max-height: 220px; overflow-y: auto;">
-
-                                    @foreach ($ucs as $uc)
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input"
-                                            type="checkbox"
-                                            name="ucs[]"
-                                            value="{{ $uc->id }}"
-                                            id="uc{{ $uc->id }}">
-
-                                        <label class="form-check-label fw-semibold"
-                                            for="uc{{ $uc->id }}">
-                                            {{ $uc->nome }}
-                                            <div class="small text-muted">
-                                                {{ $uc->cargaHoraria }}h
-                                            </div>
-                                        </label>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-
-                            <!-- Nota -->
-                            <div class="alert alert-primary d-flex align-items-start gap-2 mt-3">
-                                <i class="bi bi-info-circle"></i>
-                                <div>
-                                    <strong>Nota:</strong> Um curso pode ter múltiplas UCs associadas.
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- Footer -->
-                        <div class="modal-footer border-0">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                Cancelar
-                            </button>
-                            <button type="submit" class="btn btn-primary" id="btnVincular">
-                                Vincular
-                            </button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- FIM DA MODAL -->
-
-        <!-- Modal -->
-        <div class="modal fade" id="modalVincularDocenteCurso" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content rounded-4">
-
-                    <form action="" method="POST">
-                        @csrf
-
-                        <!-- Header -->
-                        <div class="modal-header border-0">
-                            <h5 class="modal-title fw-semibold">
-                                <i class="bi bi-mortarboard text-warning me-2"></i>
-                                Vincular Docente a Cursos
-                            </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-
-                        <!-- Body -->
-                        <div class="modal-body">
-
-                            <!-- Docente -->
-                            <div class="mb-3">
-                                <label class="form-label">Selecione o Docente</label>
-                                <select name="docente_id" class="form-select" required>
-                                    <option value="">-- Selecione um docente --</option>
-                                    @foreach ($docentes as $docente)
-                                    <option value="{{ $docente->id }}">
-                                        {{ $docente->nome }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Cursos -->
-                            <div class="mb-2">
-                                <label class="form-label">
-                                    Selecione os Cursos
-                                    <small class="text-muted">(múltipla seleção)</small>
-                                </label>
-
-                                <div class="border rounded p-3" style="max-height: 240px; overflow-y: auto;">
-                                    @foreach ($cursos as $curso)
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" name="cursos[]"
-                                            value="{{ $curso->id }}" id="curso{{ $curso->id }}">
-                                        <label class="form-check-label fw-semibold" for="curso{{ $curso->id }}">
-                                            {{ $curso->nome }}
-                                            <div class="small text-muted">
-                                                {{ $curso->cargaHoraria }}h
-                                            </div>
-                                        </label>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-
-                            <!-- Nota -->
-                            <div class="alert alert-primary d-flex align-items-start gap-2 mt-3">
-                                <i class="bi bi-info-circle"></i>
-                                <div>
-                                    <strong>Nota:</strong>
-                                    Um docente pode lecionar em múltiplos cursos, UCs e turmas.
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- Footer -->
-                        <div class="modal-footer border-0">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                Cancelar
-                            </button>
-                            <button type="submit" class="btn btn-primary" id="btnVincularDocente">
-                                Vincular
-                            </button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- FIM DO MODAL -->
-
-        <!-- Modal -->
-        <div class="modal fade" id="modalVincularDocenteUC" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content rounded-4">
-
-                    <form action="vinculos/docenteUc" method="POST">
-                        @csrf
-
-                        <!-- Header -->
-                        <div class="modal-header border-0">
-                            <h5 class="modal-title fw-semibold">
-                                <i class="bi bi-mortarboard text-warning me-2"></i>
-                                Vincular Docentes a UC
-                            </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-
-                        <!-- Body -->
-                        <div class="modal-body">
-
-                            <!-- UC -->
-                            <div class="mb-3">
-                                <label class="form-label">Selecione a UC</label>
-                                <select name="uc_id" class="form-select" required>
-                                    <option value="">-- Selecione uma UC --</option>
-                                    @foreach ($ucs as $uc)
-                                    <option value="{{ $uc->id }}">
-                                        {{ $uc->nome }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Docentes -->
-                            <div class="mb-2">
-                                <label class="form-label">
-                                    Selecione os Docentes
-                                    <small class="text-muted">(múltipla seleção)</small>
-                                </label>
-
-                                <div class="border rounded p-3" style="max-height: 240px; overflow-y: auto;">
-                                    @foreach ($docentes as $docente)
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" name="docentes[]"
-                                            value="{{ $docente->id }}" id="docente{{ $docente->id }}">
-                                        <label class="form-check-label fw-semibold" for="docente{{ $docente->id }}">
-                                            {{ $docente->nomeDocente }}
-                                            <div class="small text-muted">
-                                                <p>{{ $docente->formacao }} {{ $docente->especializacao}} {{ $docente->area}}</p>
-                                            </div>
-                                        </label>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-
-                            <!-- Nota -->
-                            <div class="alert alert-primary d-flex align-items-start gap-2 mt-3">
-                                <i class="bi bi-info-circle"></i>
-                                <div>
-                                    <strong>Nota:</strong>
-                                    Múltiplos docentes podem lecionar a mesma UC em diferentes turmas ou horários.
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- Footer -->
-                        <div class="modal-footer border-0">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                Cancelar
-                            </button>
-                            <button type="submit" class="btn btn-primary" id="btnVincularDocentes">
-                                Vincular
-                            </button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- FIM DO MODAL -->
-
-        <!-- Modal -->
-        <div class="modal fade" id="modalVincularDocenteTurma" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content rounded-4">
-
-                    <form action="/vinculos/docenteTurma" method="POST">
-                        @csrf
-
-                        <!-- Header -->
-                        <div class="modal-header border-0">
-                            <h5 class="modal-title fw-semibold">
-                                <i class="bi bi-people text-warning me-2"></i>
-                                Vincular Docente a Turmas
-                            </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-
-                        <!-- Body -->
-                        <div class="modal-body">
-
-                            <!-- Docente -->
-                            <div class="mb-3">
-                                <label class="form-label">Selecione o Docente</label>
-                                <select name="docente_id" class="form-select" required>
-                                    <option value="">-- Selecione um docente --</option>
-                                    @foreach ($docentes as $docente)
-                                    <option value="{{ $docente->id }}">
-                                        {{ $docente->nomeDocente }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Turmas -->
-                            <div class="mb-2">
-                                <label class="form-label">
-                                    Selecione as Turmas
-                                    <small class="text-muted">(múltipla seleção)</small>
-                                </label>
-
-                                <div class="border rounded p-3" style="max-height: 240px; overflow-y: auto;">
-                                    @foreach ($turmas as $turma)
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" name="turmas[]"
-                                            value="{{ $turma->id }}" id="turma{{ $turma->id }}">
-                                        <label class="form-check-label fw-semibold" for="turma{{ $turma->id }}">
-                                            {{ $turma->curso->nome }} - {{ $turma->codigoTurma }}
-                                            <div class="small text-muted">
-                                                {{ $turma->turno }} - {{ $turma->alunos_count }} alunos
-                                            </div>
-                                        </label>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-
-                            <!-- Nota -->
-                            <div class="alert alert-primary d-flex align-items-start gap-2 mt-3">
-                                <i class="bi bi-info-circle"></i>
-                                <div>
-                                    <strong>Nota:</strong>
-                                    Um docente pode lecionar para múltiplas turmas simultaneamente.
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- Footer -->
-                        <div class="modal-footer border-0">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                Cancelar
-                            </button>
-                            <button type="submit" class="btn btn-primary" id="btnVincularTurmas">
-                                Vincular
-                            </button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- FIM DO MODAL -->
-        @if ($errors->any())
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const modal = new bootstrap.Modal(
-                    document.getElementById('modalNovoCurso')
-                );
-                modal.show();
-            });
-        </script>
-        @endif
     </div>
+
+    <!--MODAL DE VINCULO-->
+
+    <!-- Modal ALUNO X TURMA -->
+    <div class="modal fade" id="modalAlunoTurma" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content rounded-4">
+
+                <form action="/vinculos/alunoTurma" method="POST">
+                    @csrf
+
+                    <!-- Header -->
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title fw-semibold">
+                            <i class="bi bi-mortarboard text-warning me-2"></i>
+                            Vincular Aluno a Cursos
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="modal-body">
+
+                        <!-- Aluno -->
+                        <div class="mb-3">
+                            <label class="form-label">Selecione o Aluno</label>
+                            <select name="aluno_id" class="form-select" required>
+                                <option value="">-- Selecione um Aluno --</option>
+                                @foreach ($alunos as $aluno)
+                                <option value="{{ $aluno->id }}">
+                                    {{ $aluno->nomeAluno }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Turma -->
+                        <div class="mb-2">
+                            <label class="form-label">
+                                Selecione as Turmas
+                                <small class="text-muted">(múltipla seleção)</small>
+                            </label>
+
+                            <div class="border rounded p-3" style="max-height: 240px; overflow-y: auto;">
+                                @foreach ($turmas as $turma)
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" value="{{ $turma->id }}" id="turma{{ $turma->id }}">
+                                    <label class="form-check-label fw-semibold text-dark" for="turma{{ $turma->id }}">
+                                        {{ $turma->codigoTurma }}
+                                        <div class="small text-muted">
+                                            {{ $turma->horasPorDia }}h
+                                        </div>
+                                    </label>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <!-- Nota -->
+                        <div class="alert alert-primary d-flex align-items-start gap-2 mt-3">
+                            <i class="bi bi-info-circle"></i>
+                            <div>
+                                <strong>Nota:</strong>
+                                Um aluno pode participar de diversas turmas.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Vincular
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- FIM DO MODAL ALUNO X TURMA -->
+
+    <!-- Modal CURSO X UCs -->
+    <div class="modal fade" id="modalVincularUC" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content rounded-4">
+
+                <form action="/vinculos/cursoUc" method="POST">
+                    @csrf
+
+                    <!-- Header -->
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title fw-semibold">
+                            <i class="bi bi-book text-warning me-2"></i>
+                            Vincular UCs a Curso
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="modal-body">
+
+                        <!-- Curso -->
+                        <div class="mb-3">
+                            <label class="form-label">Selecione o Curso</label>
+                            <select name="curso_id" class="form-select" required>
+                                <option value="">-- Selecione um curso --</option>
+                                @foreach ($cursos as $curso)
+                                <option value="{{ $curso->id }}">
+                                    {{ $curso->nome }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- UCs -->
+                        <div class="mb-2">
+                            <label class="form-label">
+                                Selecione as UCs <small class="text-muted">(múltipla seleção)</small>
+                            </label>
+
+                            <div class="border rounded p-3" style="max-height: 220px; overflow-y: auto;">
+
+                                @foreach ($ucs as $uc)
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input"
+                                        type="checkbox"
+                                        name="ucs[]"
+                                        value="{{ $uc->id }}"
+                                        id="uc{{ $uc->id }}">
+
+                                    <label class="form-check-label fw-semibold"
+                                        for="uc{{ $uc->id }}">
+                                        {{ $uc->nome }}
+                                        <div class="small text-muted">
+                                            {{ $uc->cargaHoraria }}h
+                                        </div>
+                                    </label>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <!-- Nota -->
+                        <div class="alert alert-primary d-flex align-items-start gap-2 mt-3">
+                            <i class="bi bi-info-circle"></i>
+                            <div>
+                                <strong>Nota:</strong> Um curso pode ter múltiplas UCs associadas.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Vincular
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- FIM DA MODAL -->
+
+    <!-- MODAL DOCENTE X CURSO -->
+    <div class="modal fade" id="modalVincularDocenteCurso" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content rounded-4">
+
+                <form action="/vinculos/docenteCurso" method="POST">
+                    @csrf
+
+                    <!-- Header -->
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title fw-semibold">
+                            <i class="bi bi-mortarboard text-warning me-2"></i>
+                            Vincular Docente a Cursos
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="modal-body">
+
+                        <!-- Docente -->
+                        <div class="mb-3">
+                            <label class="form-label">Selecione o Docente</label>
+                            <select name="docente_id" class="form-select" required>
+                                <option value="">-- Selecione um docente --</option>
+                                @foreach ($docentes as $docente)
+                                <option value="{{ $docente->id }}">
+                                    {{ $docente->nomeDocente }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Cursos -->
+                        <div class="mb-2">
+                            <label class="form-label">
+                                Selecione os Cursos
+                                <small class="text-muted">(múltipla seleção)</small>
+                            </label>
+
+                            <div class="border rounded p-3" style="max-height: 240px; overflow-y: auto;">
+                                @foreach ($cursos as $curso)
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="cursos[]"
+                                        value="{{ $curso->id }}" id="curso{{ $curso->id }}">
+                                    <label class="form-check-label fw-semibold" for="curso{{ $curso->id }}">
+                                        {{ $curso->nome }}
+                                        <div class="small text-muted">
+                                            {{ $curso->cargaHoraria }}h
+                                        </div>
+                                    </label>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <!-- Nota -->
+                        <div class="alert alert-primary d-flex align-items-start gap-2 mt-3">
+                            <i class="bi bi-info-circle"></i>
+                            <div>
+                                <strong>Nota:</strong>
+                                Um docente pode lecionar em múltiplos cursos, UCs e turmas.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Vincular
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- FIM DO MODAL -->
+
+    <!-- Modal DOCENTE X UC -->
+    <div class="modal fade" id="modalVincularDocenteUC" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content rounded-4">
+
+                <form action="vinculos/docenteUc" method="POST">
+                    @csrf
+
+                    <!-- Header -->
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title fw-semibold">
+                            <i class="bi bi-mortarboard text-warning me-2"></i>
+                            Vincular Docentes a UC
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="modal-body">
+
+                        <!-- UC -->
+                        <div class="mb-3">
+                            <label class="form-label">Selecione a UC</label>
+                            <select name="uc_id" class="form-select" required>
+                                <option value="">-- Selecione uma UC --</option>
+                                @foreach ($ucs as $uc)
+                                <option value="{{ $uc->id }}">
+                                    {{ $uc->nome }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Docentes -->
+                        <div class="mb-2">
+                            <label class="form-label">
+                                Selecione os Docentes
+                                <small class="text-muted">(múltipla seleção)</small>
+                            </label>
+
+                            <div class="border rounded p-3" style="max-height: 240px; overflow-y: auto;">
+                                @foreach ($docentes as $docente)
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="docentes[]"
+                                        value="{{ $docente->id }}" id="docente{{ $docente->id }}">
+                                    <label class="form-check-label fw-semibold" for="docente{{ $docente->id }}">
+                                        {{ $docente->nomeDocente }}
+                                        <div class="small text-muted">
+                                            <p>{{ $docente->formacao }} {{ $docente->especializacao}} {{ $docente->area}}</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <!-- Nota -->
+                        <div class="alert alert-primary d-flex align-items-start gap-2 mt-3">
+                            <i class="bi bi-info-circle"></i>
+                            <div>
+                                <strong>Nota:</strong>
+                                Múltiplos docentes podem lecionar a mesma UC em diferentes turmas ou horários.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Vincular
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- FIM DO MODAL -->
+
+    <!-- Modal DOCENTE X TURMA -->
+    <div class="modal fade" id="modalVincularDocenteTurma" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content rounded-4">
+
+                <form action="/vinculos/docenteTurma" method="POST">
+                    @csrf
+
+                    <!-- Header -->
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title fw-semibold">
+                            <i class="bi bi-people text-warning me-2"></i>
+                            Vincular Docente a Turmas
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="modal-body">
+
+                        <!-- Docente -->
+                        <div class="mb-3">
+                            <label class="form-label">Selecione o Docente</label>
+                            <select name="docente_id" class="form-select" required>
+                                <option value="">-- Selecione um docente --</option>
+                                @foreach ($docentes as $docente)
+                                <option value="{{ $docente->id }}">
+                                    {{ $docente->nomeDocente }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Turmas -->
+                        <div class="mb-2">
+                            <label class="form-label">
+                                Selecione as Turmas
+                                <small class="text-muted">(múltipla seleção)</small>
+                            </label>
+
+                            <div class="border rounded p-3" style="max-height: 240px; overflow-y: auto;">
+                                @foreach ($turmas as $turma)
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="turmas[]"
+                                        value="{{ $turma->id }}" id="turma{{ $turma->id }}">
+                                    <label class="form-check-label fw-semibold" for="turma{{ $turma->id }}">
+                                        {{ $turma->curso->nome }} - {{ $turma->codigoTurma }}
+                                        <div class="small text-muted">
+                                            {{ $turma->turno }} - {{ $turma->alunos_count }} alunos
+                                        </div>
+                                    </label>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <!-- Nota -->
+                        <div class="alert alert-primary d-flex align-items-start gap-2 mt-3">
+                            <i class="bi bi-info-circle"></i>
+                            <div>
+                                <strong>Nota:</strong>
+                                Um docente pode lecionar para múltiplas turmas simultaneamente.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Vincular
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- FIM DO MODAL -->
+    @if ($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = new bootstrap.Modal(
+                document.getElementById('modalNovoCurso')
+            );
+            modal.show();
+        });
+    </script>
+    @endif
 </x-layout>

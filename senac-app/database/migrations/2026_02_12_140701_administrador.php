@@ -16,15 +16,15 @@ return new class extends Migration
         //criando as colunas
         schema::create('administrador', function(Blueprint $table){
             $table->increments('id');
-            $table->longtext('nomeAdministrador');
-            $table->text('email');
+            $table->longtext('nome');
             $table->text('cpf', 11)->unique();
-            $table->longtext('senha')->unique();
             $table->date('dataNascimento');
             $table->text('telefone');
+            $table->longtext('email');
+            $table->longtext('senha');
             $table->enum('status', ['ativo', 'inativo'])->default('ativo');
-           
             $table->timestamps();
+            
         });
     }
 

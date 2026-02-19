@@ -3,13 +3,13 @@
         <!-- Abas -->
         <ul class="nav nav-pills gap-2 mb-4">
             <li class="nav-item">
-                <a class="btn btn-primary" href="dashboardAdm"><i class="bi bi-bar-chart"></i></i> Dashboard</a>
+                <a class="btn btn-primary active" href="dashboardAdm"><i class="bi bi-bar-chart"></i></i> Dashboard</a>
             </li>
             <li class="nav-item">
                 <a class="btn btn-primary" href="cursos"><i class="bi bi-backpack"></i> Cursos</a>
             </li>
             <li class="nav-item">
-                <a class="btn btn-primary active" href="unidadesCurriculares"><i class="bi bi-book"></i> UCs</a>
+                <a class="btn btn-primary " href="unidadesCurriculares"><i class="bi bi-book"></i> UCs</a>
             </li>
             <li class="nav-item">
                 <a class="btn btn-primary" href="docentes"><i class="bi bi-person-workspace"></i> Docentes</a>

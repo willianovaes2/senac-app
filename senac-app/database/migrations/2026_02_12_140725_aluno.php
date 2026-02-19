@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('dataNascimento');
             $table->text('telefone');
             $table->longtext('endereco');
-            $table->longtext('emailAluno');
+            $table->longtext('emailAluno')->unique();
             $table->longtext('senhaAluno');
             $table->date('dataMatricula');
             $table->enum('tipo', ['bolsista', 'pagante'])->default('pagante');

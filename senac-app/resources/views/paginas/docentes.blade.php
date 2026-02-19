@@ -78,15 +78,7 @@
                             <li><strong>Telefone:</strong> {{ $docente->telefone }}</li>
                             <li><strong>Formação:</strong> {{ $docente->formacao }}</li>
                             <li><strong>Especialização:</strong> {{ $docente->especializacao }}</li>
-                            <li>
-                                <strong>Turno:</strong>
-                                @if ($docente->turno)
-                                {{ implode(', ', array_map('ucfirst', $docente->turno)) }}
-                                @else
-                                —
-                                @endif
-                            </li>
-
+                            <li><strong>Turno:</strong> {{ $docente->turno }}</li>
                             <li><strong>Carga Horária:</strong> {{ $docente->cargaHoraria }}</li>
                         </ul>
 
@@ -133,8 +125,7 @@
                     </div>
 
                     <!-- Form -->
-                    <form action="/inserirDocente" method="POST" id="form-docente">
-
+                    <form action="/inserirDocente" method="POST">
                         @csrf
 
                         <div class="modal-body">
@@ -144,7 +135,7 @@
                                 <div class="col">
                                     <label class="form-label fw-semibold">Nome Completo *</label>
                                     <input type="text" name="nomeDocente" class="form-control"
-                                        placeholder="Nome completo do docente" required>
+                                        value="{{ old('nomeDocente') }}" placeholder="Nome completo do docente" required>
                                 </div>
 
                             </div>
@@ -153,14 +144,16 @@
                                 <!-- CPF -->
                                 <div class="col">
                                     <label class="form-label fw-semibold">CPF *</label>
-                                    <input type="text" name="cpf" class="form-control" placeholder="000.000.000-00"
-                                        required>
+                                    <input type="text" name="cpf" class="form-control" value="{{ old('cpf') }}" placeholder="000.000.000-00" required>
+                                    @error('cpf')
+                                    <small style="color:red;">{{ $message }}</small>
+                                    @enderror
                                 </div>
 
                                 <!-- Data de Nascimento -->
                                 <div class="col">
                                     <label class="form-label fw-semibold">Data de Nascimento *</label>
-                                    <input type="date" name="dataNascimento" class="form-control" required>
+                                    <input type="date" name="dataNascimento" class="form-control" max="{{ now()->subYears(18)->format('Y-m-d') }}" required>
                                 </div>
                             </div>
 
@@ -170,7 +163,7 @@
                                 <div class="col">
                                     <label class="form-label fw-semibold">Endereço *</label>
                                     <input type="text" name="endereco" class="form-control"
-                                        placeholder="Rua, número, bairro, cidade" required>
+                                        value="{{ old('endereco') }}" placeholder="Rua, número, bairro, cidade" required>
                                 </div>
                             </div>
 
@@ -179,14 +172,17 @@
                                 <div class="col">
                                     <label class="form-label fw-semibold">Telefone *</label>
                                     <input type="text" name="telefone" class="form-control"
-                                        placeholder="(00) 00000-0000" required>
+                                        value="{{ old('telefone') }}" placeholder="(00) 00000-0000" required>
                                 </div>
 
                                 <!-- Email -->
                                 <div class="col">
                                     <label class="form-label fw-semibold">Email *</label>
                                     <input type="text" name="emailDocente" class="form-control"
-                                        placeholder="email@senacsp.edu.br" required>
+                                        value="{{ old('emailDocente') }}" placeholder="email@senacsp.edu.br" required>
+                                    @error('emailDocente')
+                                    <small style="color:red;">{{ $message }}</small>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -195,13 +191,19 @@
                                 <div class="col">
                                     <label class="form-label fw-semibold">Formação (Graduação)</label>
                                     <input type="text" name="formacao" class="form-control"
-                                        placeholder="Ex: Ciência da Computação">
+                                        value="{{ old('formacao') }}" placeholder="Ex: Ciência da Computação">
                                 </div>
                                 <!-- Especialização -->
                                 <div class="col">
                                     <label class="form-label fw-semibold">Especialização (Pós)</label>
                                     <input type="text" name="especializacao" class="form-control"
-                                        placeholder="Ex: Banco de dados">
+                                        value="{{ old('especializacao') }}" placeholder="Ex: Banco de dados">
+                                </div>
+                                <!--Area-->
+                                <div class="col">
+                                    <label class="form-label fw-semibold">Área de Atuação</label>
+                                    <input type="text" name="area" class="form-control"
+                                        value="{{ old('area') }}" placeholder="Ex: Desenvolvedor BackEnd">
                                 </div>
                             </div>
 
@@ -209,7 +211,7 @@
                                 <!-- Carga Horária Diária -->
                                 <div class="col">
                                     <label class="form-label fw-semibold">Carga Horária Diária *</label>
-                                    <select name="cargaHoraria" class="form-select">
+                                    <select name="cargaHoraria" value="{{ old('cargaHoraria') }}" class="form-select">
                                         <option value="4">4 horas</option>
                                         <option value="6">6 horas</option>
                                         <option value="8" selected>8 horas</option>
@@ -218,8 +220,14 @@
 
                                 <!-- Turno de Trabalho -->
                                 <div class="col">
-                                    <label class="form-label fw-semibold">Senha</label>
-                                    <input type="text" name="senhaDocente" class="form-control" placeholder="Informe a senha do docente" required>
+                                    <label class="form-label fw-semibold">Turno *</label>
+                                    <select name="turno" class="form-select" value="{{ old('Turno') }}" required>
+                                        <option value="">Selecione o turno</option>
+                                        <option value="manha">Manhã</option>
+                                        <option value="tarde">Tarde</option>
+                                        <option value="noite">Noite</option>
+                                        <option value="integral">Integral</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -239,54 +247,28 @@
                                         <option value="inativo">Inativo</option>
                                     </select>
                                 </div>
+
                             </div>
 
                             <div class="row">
                                 <div class="col">
-                                    <!-- Turno de Trabalho -->
-                                    <label class="form-label fw-semibold">Turnos</label>
-
-                                    @if ($errors->has('turnos'))
-                                    <div class="text-danger small mb-2">
-                                        {{ $errors->first('turnos') }}
-                                    </div>
-                                    @endif
-
-
-                                    <div class="lista-scroll">
-                                        <div class="form-check">
-                                            <input class="form-check-input turno-checkbox"
-                                                type="checkbox" name="turno[]"
-                                                value="manha" id="manha">
-                                            <label class="form-check-label" for="manha">
-                                                Manhã
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input turno-checkbox"
-                                                type="checkbox" name="turno[]"
-                                                value="tarde" id="tarde">
-                                            <label class="form-check-label" for="tarde">
-                                                Tarde
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input turno-checkbox"
-                                                type="checkbox" name="turno[]"
-                                                value="noite" id="noite">
-                                            <label class="form-check-label" for="noite">
-                                                Noite
-                                            </label>
-                                        </div>
-                                    </div>
+                                    <label class="form-label fw-semibold">Senha</label>
+                                    <input type="text" name="senhaDocente" class="form-control" value="{{ old('senhaDocente') }}" placeholder="Informe a senha do docente" required>
                                 </div>
 
                                 <div class="col">
 
                                 </div>
                             </div>
-                        </div>
 
+                            <div class="alert alert-primary d-flex align-items-start gap-2 mt-3">
+                                <i class="bi bi-info-circle"></i>
+                                <div class="w-75">
+                                    <strong>Nota:</strong>
+                                    O e-mail e o CPF devem ser únicos. Não será permitido cadastro com dados já existentes.
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- Footer -->
                         <div class="modal-footer border-0 filter-tabs">
@@ -305,5 +287,16 @@
         </div>
         <!-- FIM DO MODAL -->
     </div>
-    
+    @if ($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modalElement = document.getElementById('modalNovoDocente');
+
+            if (modalElement) {
+                const modal = new bootstrap.Modal(modalElement);
+                modal.show();
+            }
+        });
+    </script>
+    @endif
 </x-layout>

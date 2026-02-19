@@ -14,7 +14,12 @@ class IndicadorModel extends Model
 
     // Relação Many-to-Many com UCs
     public function ucs()
-    {
-        return $this->belongsToMany(ucModel::class, 'indicador_uc', 'indicador_id', 'uc_id');
-    }
+{
+    return $this->belongsToMany(
+        ucModel::class,
+        'indicador_uc',
+        'indicador_id',
+        'uc_id'
+    );
+}
 }

@@ -38,4 +38,32 @@ class ucModel extends Model
     {
         return $this->hasMany(aulaModel::class, 'uc_id', 'id');
     }
+
+    public function aluno()
+    {
+        return $this->belongsToMany(
+            ucModel::class,
+            'aluno_uc',
+            'uc_id',
+            'aluno_id'
+        );
+    }
+    public function turmas()
+    {
+        return $this->belongsToMany(
+            turmaModel::class,
+            'uc_turma',
+            'uc_id',
+            'turma_id'
+        );
+    }
+    public function indicadores()
+    {
+        return $this->belongsToMany(
+            indicadorModel::class,
+            'indicador_uc',
+            'uc_id',
+            'indicador_id'
+        );
+    }
 }

@@ -17,18 +17,19 @@ return new class extends Migration
         schema::create('docente', function(Blueprint $table){
             $table->increments('id');
             $table->longtext('nomeDocente');
-            $table->text('cpf', 11)->unique();
+            $table->string('cpf', 11)->unique();
             $table->date('dataNascimento');
             $table->text('telefone');
-            $table->longtext('emailDocente');
+            $table->longtext('emailDocente')->unique();
             $table->longtext('formacao');
             $table->longtext('especializacao');
             $table->enum('status', ['ativo', 'inativo'])->default('ativo');
             $table->date('dataCadastro');
             $table->integer('cargaHoraria');
-            $table->json('turno')->nullable();
+            $table->longtext('turno')->nullable;
             $table->longtext('senhaDocente');
             $table->longtext('endereco');
+            $table->longText('area');
             $table->timestamps();
         });
         

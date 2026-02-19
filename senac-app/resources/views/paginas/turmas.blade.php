@@ -9,7 +9,7 @@
                 <a class="btn btn-primary" href="cursos"><i class="bi bi-backpack"></i> Cursos</a>
             </li>
             <li class="nav-item">
-                <a class="btn btn-primary " href="unidadesCurriculares"><i class="bi bi-book"></i> UCs</a>
+                <a class="btn btn-primary" href="unidadesCurriculares"><i class="bi bi-book"></i> UCs</a>
             </li>
             <li class="nav-item">
                 <a class="btn btn-primary" href="docentes"><i class="bi bi-person-workspace"></i> Docentes</a>
@@ -33,11 +33,11 @@
                     Relatórios</a>
             </li>
         </ul>
-
+ 
         <!-- Conteudo Principal -->
-
+ 
         <section class="container-fluid">
-
+ 
             <!-- Cabeçalho -->
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div>
@@ -46,32 +46,32 @@
                         Gerencie as turmas e vincule alunos e docentes
                     </p>
                 </div>
-
+ 
                 <a class="btn btn-primary text-end" data-bs-toggle="modal" data-bs-target="#modalNovaTurma">
                     <i class="bi bi-plus-lg"></i> Nova Turma
                 </a>
             </div>
-
+ 
             <!-- Cards -->
             <div class="row g-4">
-
+ 
                 <!-- Card Turma -->
-
+ 
                 @if ($turmas->isEmpty())
-
+ 
                 <div colspan="8" class="text-center text-muted py-4">
                     Nenhuma turma encontrada
                 </div>
-
+ 
                 @else
                 @foreach ($turmas as $turma)
                 <div class="col-md-6 col-lg-4 float-start">
                     <div class="card rounded-4 h-100 p-2 hover-shadow">
                         <div class="card-body d-flex flex-column">
-
+ 
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <h4 class="fw-bold">{{ $turma->codigoTurma }} </h4>
-
+ 
                                 @if ($turma->status === 'ativo')
                                 <span class="badge bg-success-subtle text-success rounded-pill px-3">
                                     ativo
@@ -82,11 +82,11 @@
                                 </span>
                                 @endif
                             </div>
-
+ 
                             <small class="text-muted mb-2">
                                 {{ $turma->curso->nome ?? '—' }}
                             </small>
-
+ 
                             <div class="mb-2">
                                 <small class="text-muted">Docente:</small>
                                 <div class="fw-semibold">
@@ -99,21 +99,21 @@
                                     @endif
                                 </div>
                             </div>
-
+ 
                             <div class="mb-2 d-flex align-items-center gap-2">
                                 <i class="bi bi-people text-muted"></i>
                                 <span>
                                     {{ $turma->alunos->count() }} alunos
                                 </span>
                             </div>
-
+ 
                             <div class="mb-1">
                                 <small class="text-muted">Início:</small>
                                 <span class="fw-semibold">
                                     {{ \Carbon\Carbon::parse($turma->dataInicio)->format('d/m/Y') }}
                                 </span>
                             </div>
-
+ 
                             <div class="mb-3">
                                 <small class="text-muted">Previsão Término:</small>
                                 <span class="fw-semibold">
@@ -122,50 +122,43 @@
                                     @else
                                     —
                                     @endif
-
+ 
                                 </span>
                             </div>
-
-
+ 
+ 
                             <div class="mt-auto d-flex gap-2">
-                                <button class="btn btn-outline-primary btn-sm btn-ver-turma" data-bs-toggle="modal"
-                                    data-bs-target="#modalDetalhesTurma" data-nome="{{ $turma->nome }}"
-                                    data-curso="{{ $turma->curso->nome }}" data-status="{{ $turma->status }}"
-                                    data-docente="{{ $turma->nomeDocente }}"
-                                    data-periodo="{{ $turma->dataInicio }} até {{ $turma->dataFim }}"
-                                    data-alunos='@json($turma->alunos)'>
-                                    <i class="bi bi-eye"></i> Ver
-                                </button>
-
-                                <a href="/editarTurmas/{{$turma->id}}" class="btn btn-outline-dark">
+                                <a href="/editarTurmas/{{$turma->id}}" class="btn btn-outline-dark w-100">
                                     <i class="bi bi-pencil"></i>
                                 </a>
                             </div>
-
+ 
                         </div>
                     </div>
                 </div>
                 @endforeach
                 @endif
-
+ 
             </div>
-
+ 
         </section>
-
+ 
         <!-- Modal Novo Turma -->
         <div class="modal fade" id="modalNovaTurma" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content rounded-4 border-0">
-
+ 
                     <!-- Header -->
                     <div class="modal-header border-0">
                         <h5 class="modal-title fw-bold">Nova Turma</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-
+ 
                     <!-- Form -->
                     <form action="/inserirTurma" method="POST">
                         @csrf
+ 
+ 
                         <div class="modal-body">
                             <div class="row">
                                 <!-- Curso -->
@@ -173,13 +166,13 @@
                                     <label class="form-label fw-semibold">Curso *</label>
                                     <select name="curso_id" class="form-select" required>
                                         <option value="">Selecione o curso</option>
-
+ 
                                         @if ($cursos->isEmpty())
-
+ 
                                         <div colspan="8" class="text-center text-muted py-4">
                                             Nenhum Curso encontrado
                                         </div>
-
+ 
                                         @else
                                         @foreach ($cursos as $curso)
                                         <option value="{{ $curso->id }}">
@@ -190,19 +183,23 @@
                                     </select>
                                 </div>
                             </div>
-
+ 
+                            <div class="row">
+ 
+                            </div>
+ 
                             <div class="row">
                                 <!-- Docentes -->
                                 <div class="col">
                                     <label class="form-label fw-semibold">Selecionar Docentes</label>
-
+ 
                                     <div class="lista-scroll">
                                         @if ($docentes->isEmpty())
-
+ 
                                         <div colspan="8" class="text-center text-muted py-4">
                                             Nenhum docente encontrada
                                         </div>
-
+ 
                                         @else
                                         @foreach ($docentes as $docente)
                                         <div class="form-check">
@@ -221,19 +218,19 @@
                                     </div>
                                 </div>
                             </div>
-
+ 
                             <div class="row">
                                 <!-- Horário -->
                                 <div class="col">
                                     <label class="form-label fw-semibold">Selecionar Alunos</label>
-
+ 
                                     <div class="lista-scroll">
                                         @if ($alunos->isEmpty())
-
+ 
                                         <div colspan="8" class="text-center text-muted py-4">
                                             Nenhum aluno encontrado
                                         </div>
-
+ 
                                         @else
                                         @foreach ($alunos as $aluno)
                                         <div class="form-check">
@@ -252,15 +249,15 @@
                                     </div>
                                 </div>
                             </div>
-
+ 
                             <div class="row">
                                 <div class="col">
                                     <label class="form-label fw-semibold">Data de Início *</label>
                                     <input type="date" name="dataInicio" class="form-control" required>
                                 </div>
                             </div>
-
-                            <div class="row">
+ 
+                            <div class="row mt-3">
                                 <div class="col">
                                     <label class="form-label fw-semibold">Horas por dia *</label>
                                     <input type="number"
@@ -271,7 +268,7 @@
                                         required>
                                 </div>
                             </div>
-
+ 
                             <div class="row">
                                 <!-- Status -->
                                 <div class="col">
@@ -281,7 +278,7 @@
                                         <option value="inativo">Inativo</option>
                                     </select>
                                 </div>
-
+ 
                                 <div class="col">
                                     <label class="form-label fw-semibold">Turno *</label>
                                     <select name="turno" class="form-select" required>
@@ -293,7 +290,7 @@
                                 </div>
                             </div>
                         </div>
-
+ 
                         <!-- Footer -->
                         <div class="modal-footer border-0 filter-tabs">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">
@@ -303,67 +300,13 @@
                                 Salvar
                             </button>
                         </div>
-
-
+ 
                     </form>
-
-                </div>
-            </div>
-        </div>
-        <!-- FIM DO MODAL -->
-
-        <!-- MODAL VISUALIZAR TURMA -->
-        <div class="modal fade" id="modalDetalhesTurma" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content rounded-4">
-
-                    <div class="modal-header border-0">
-                        <h5 class="modal-title" id="modalTitulo"></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-
-                    <div class="modal-body">
-
-                        <div class="row mb-4">
-                            <div class="col-md-6">
-                                <p class="text-muted mb-1">Curso</p>
-                                <strong id="modalCurso"></strong>
-                            </div>
-
-                            <div class="col-md-6">
-                                <p class="text-muted mb-1">Status</p>
-                                <strong id="modalStatus"></strong>
-                            </div>
-
-                            <div class="col-md-6 mt-3">
-                                <p class="text-muted mb-1">Docente Responsável</p>
-                                <strong id="modalDocente"></strong>
-                            </div>
-
-                            <div class="col-md-6 mt-3">
-                                <p class="text-muted mb-1">Período</p>
-                                <strong id="modalPeriodo"></strong>
-                            </div>
-                        </div>
-
-                        <h6 class="fw-semibold mb-3">
-                            Alunos Matriculados (<span id="totalAlunos"></span>)
-                        </h6>
-
-                        <div id="listaAlunos" class="d-flex flex-column gap-3"></div>
-
-                    </div>
-
-                    <div class="modal-footer border-0">
-                        <button class="btn btn-dark px-4" data-bs-dismiss="modal">
-                            Fechar
-                        </button>
-                    </div>
-
+ 
                 </div>
             </div>
         </div>
         <!-- FIM DO MODAL -->
     </div>
-
 </x-layout>
+ 

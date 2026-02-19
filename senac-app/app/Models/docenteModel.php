@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class docenteModel extends Model
 {
     use HasFactory;
-    protected $table = 'docente';
-
+    protected $table='docente';
+    
     protected $casts = [
         'turno' => 'array'
     ];
@@ -24,16 +24,6 @@ class docenteModel extends Model
         );
     }
 
-    public function turmas()
-    {
-        return $this->belongsToMany(
-            turmaModel::class,
-            'turma_docente',
-            'docente_id',
-            'turma_id'
-        );
-    }
-
     public function ucs()
     {
         return $this->belongsToMany(
@@ -41,6 +31,16 @@ class docenteModel extends Model
             'docente_uc',
             'docente_id',
             'uc_id'
+        );
+    }
+
+    public function turmas()
+    {
+        return $this->belongsToMany(
+            turmaModel::class,
+            'docente_turma',
+            'docente_id',
+            'turma_id'
         );
     }
 }

@@ -73,6 +73,10 @@
                     </div>
 
                     <div class="row">
+
+                    </div>
+
+                    <div class="row">
                         <!-- Docentes -->
                         <div class="col">
                             <label class="form-label fw-semibold">Selecionar Docentes</label>
@@ -210,6 +214,6 @@
                     </div>
                 </div>
             </form>
-        </section>
+
     </div>
 </x-layout>

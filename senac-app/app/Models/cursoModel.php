@@ -10,24 +10,15 @@ use App\Models\ucModel;
 class cursoModel extends Model
 {
     use HasFactory;
-
-    protected $table = 'curso';
-
+    protected $table='curso';
+    
     protected $casts = [
         'dias' => 'array', 
     ];
 
-    // Curso -> Turmas
-    public function turmas()
-    {
-        return $this->hasMany(turmaModel::class, 'curso_id', 'id');
-    }
-
     // Curso -> UCs
     public function ucs()
     {
-        return $this->hasMany(ucModel::class, 'cursoCodigo', 'id');
-    
         return $this->belongsToMany(
             ucModel::class,
             'curso_uc',

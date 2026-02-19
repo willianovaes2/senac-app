@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Session;
-use App\Http\Controllers\authController;
 use App\Models\alunoModel;
 use App\Models\cursoModel;
 use App\Rules\ValidaCpf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
+
 
 class alunoController extends Controller
 {
@@ -19,7 +18,31 @@ class alunoController extends Controller
     } //fim do metodo de direcionamento
 
     public function inserirAluno(Request $request)
-    {
+    {        
+        
+        // Remove máscara do CPF
+        $cpfLimpo = preg_replace('/\D/', '', $request->cpf);
+        
+        // VALIDAÇÕES (É AQUI QUE A RULE FUNCIONA)
+        $request->validate([
+            'cpf'            => ['required', new ValidaCpf, 'unique:aluno,cpf'],
+            'emailAluno' => 'required|email|unique:aluno,emailAluno',
+            'tipo' => 'required|in:pagante,bolsista',
+        ], [
+            'cpf.unique' => 'Este CPF já está cadastrado.',
+            'emailAluno.unique' => 'Este e-mail já está cadastrado.',
+        ]);
+
+
+        // Validação de idade mínima (15 anos)
+        $dataLimite = Carbon::now()->subYears(15);
+        if (Carbon::parse($request->dataNascimento)->greaterThan($dataLimite)) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'dataNascimento' => 'O aluno deve ter no mínimo 15 anos.'
+                ]);
+        }
 
         $nomeAluno              = $request->input('nomeAluno');
         $intencao               = $request->input('intencao');
@@ -30,13 +53,12 @@ class alunoController extends Controller
         $emailAluno             = $request->input('emailAluno');
         $senhaAluno             = $request->input('senhaAluno');
         $dataMatricula          = now();
-        $status                 = $request->input('status');
         $tipo                   = $request->input('tipo');
+        $status                 = $request->input('status');
         $endereco               = $request->input('endereco');
-
+        
         //chamando model
         $model = new alunoModel();
-
         $model->nomeAluno             = $nomeAluno;
         $model->intencao              = $intencao;
         $model->ra                    = $ra;
@@ -45,12 +67,12 @@ class alunoController extends Controller
         $model->telefone              = $telefone;
         $model->emailAluno            = $emailAluno;
         $model->senhaAluno            = $senhaAluno;
-        $model->dataMatricula         = $dataMatricula;
+        $model->dataMatricula         = now();
         $model->tipo                  = $tipo;
         $model->status                = $status;
         $model->endereco              = $endereco;
-
         $model->save();
+        
         return redirect('/alunos');
     } //fim do metodo inserir
 
@@ -93,17 +115,4 @@ class alunoController extends Controller
         alunoModel::where('id', $id)->delete();
         return redirect('/alunos');
     } //fim do metodo excluir
-
-    public function exibirAluno($id)
-    {
-        $aluno = Session::get('usuario');
-
-        // Buscar aluno com UCs
-        $aluno = alunoModel::with('ucs')->find($aluno->id);
-
-        $ucs = $aluno->ucs;
-        $uc  = $ucs->first(); // pega a primeira UC
-
-        return view('paginas.aluno.telaInicialAluno', compact('aluno','ucs','uc'));
-    }
 }

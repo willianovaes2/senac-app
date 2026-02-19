@@ -22,14 +22,14 @@ class turmaModel extends Model
 
     public function curso()
     {
-        return $this->belongsTo(cursoModel::class, 'curso_id', 'id');
+        return $this->belongsTo(cursoModel::class, 'curso_id');
     }
 
     public function docentes()
     {
         return $this->belongsToMany(
             docenteModel::class,
-            'turma_docente',
+            'docente_turma',
             'turma_id',
             'docente_id'
         );
@@ -44,14 +44,9 @@ class turmaModel extends Model
             'aluno_id'
         );
     }
-
-    public function ucsDiretas()
+    
+    public function aulas()
     {
-        return $this->belongsToMany(
-            ucModel::class,
-            'uc_turma',
-            'turma_id',
-            'uc_id'
-        )->withPivot(['data_inicio', 'data_fim', 'status']);
+        return $this->hasMany(aulaModel::class, 'turma_id');
     }
 }

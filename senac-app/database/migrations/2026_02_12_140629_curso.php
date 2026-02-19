@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         //criando a tabela
-        schema::create('curso', function (Blueprint $table) {
+        schema::create('curso', function(Blueprint $table){
             $table->increments('id');
             $table->longtext('nome');
-            $table->longtext('tipo');
-            $table->integer('cargaHoraria');
+            $table->integer('tipo');
+            $table->longtext('cargaHoraria');
             $table->decimal('preco', 10, 2);
             $table->integer('vagas');
             $table->integer('bolsas');

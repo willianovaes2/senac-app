@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use App\Models\cursoModel;
 use Illuminate\Http\Request;
 
@@ -14,7 +14,6 @@ class cursoController extends Controller
 
     public function inserirCurso(Request $request)
     {
-
         $request->validate([
             'dias' => 'required|array|min:1'
         ], [
@@ -32,8 +31,7 @@ class cursoController extends Controller
         $situacao           = $request->input('situacao');
         $sigla              = $request->input('sigla');
         $dias               = $request->input('dias');
-
-        $dias = $request->input('dias', []);
+        
 
         //chamando model
         $model = new cursoModel();
@@ -73,21 +71,18 @@ class cursoController extends Controller
             'dias.required' => 'Selecione pelo menos um dia da semana.',
             'dias.min' => 'Selecione pelo menos um dia da semana.'
         ]);
-
+        
         $dados = $request->except(['_token', '_method']);
 
         $dados['dias'] = $request->input('dias', []);
-
         cursoModel::where('id', $id)->update($dados);
 
         return redirect('/cursos');
-    } // fim do metodo atualizar
-
+    } //fim do metodo atualizar
 
     public function excluirCurso($id)
     {
         cursoModel::where('id', $id)->delete();
         return redirect('/cursos');
     } //fim do metodo excluir
-
 }

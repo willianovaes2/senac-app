@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
+
 class docenteController extends Controller
 {
     public function cadastrarDocente()
@@ -17,11 +18,29 @@ class docenteController extends Controller
 
     public function inserirDocente(Request $request)
     {
+        // VALIDAÇÕES (É AQUI QUE A RULE FUNCIONA)
         $request->validate([
-            'turno' => 'required|array|min:1'
+            'cpf'            => ['required', new ValidaCpf, 'unique:docente,cpf'],
+            'emailDocente'   => 'required|email|unique:docente,emailDocente',
+            'turno' => 'required|string'
         ], [
+            'cpf.unique' => 'Este CPF já está cadastrado.',
+            'emailDocente.unique' => 'Este e-mail já está cadastrado.',
             'turno.required' => 'Selecione pelo menos um turno.',
         ]);
+
+        // Remove máscara do CPF
+        $cpfLimpo = preg_replace('/\D/', '', $request->cpf);
+
+        // Validação de idade mínima (18 anos)
+        $dataLimite = Carbon::now()->subYears(18);
+        if (Carbon::parse($request->dataNascimento)->greaterThan($dataLimite)) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'dataNascimento' => 'O docente deve ter no mínimo 18 anos.'
+                ]);
+        }
 
         $nomeDocente            = $request->input('nomeDocente');
         $cpf                    = $request->input('cpf');
@@ -31,31 +50,29 @@ class docenteController extends Controller
         $formacao               = $request->input('formacao');
         $especializacao         = $request->input('especializacao');
         $status                 = $request->input('status');
-        $dataCadastro           = now();
         $cargaHoraria           = $request->input('cargaHoraria');
         $turno                  = $request->input('turno');
+        $dataCadastro           = now();
         $senhaDocente           = $request->input('senhaDocente');
         $endereco               = $request->input('endereco');
-
-        $turno = $request->input('turno', []);
+        $area                   = $request->input('area');
 
         //chamando model
         $model = new docenteModel();
-
         $model->nomeDocente                     = $nomeDocente;
-        $model->cpf                             = $cpf;
+        $model->cpf                             = $cpfLimpo;
         $model->dataNascimento                  = $dataNascimento;
         $model->telefone                        = $telefone;
         $model->emailDocente                    = $emailDocente;
         $model->formacao                        = $formacao;
         $model->especializacao                  = $especializacao;
         $model->status                          = $status;
-        $model->dataCadastro                    = $dataCadastro;
+        $model->dataCadastro                    = now();
         $model->cargaHoraria                    = $cargaHoraria;
         $model->turno                           = $turno;
         $model->senhaDocente                    = $senhaDocente;
         $model->endereco                        = $endereco;
-
+        $model->area                            = $area;
         $model->save();
         return redirect('/docentes');
     } //fim do metodo inserir
@@ -80,12 +97,12 @@ class docenteController extends Controller
         ], [
             'turno.required' => 'Selecione pelo menos um turno.',
         ]);
-        docenteModel::where('id', $id)->update(
-            $request->except(['_token', '_method'])
-        );
+        $docente = docenteModel::findOrFail($id);
+
+        $docente->update($request->except('_token'));
 
         return redirect('/docentes');
-    } //fim do metodo atualiziar
+    } //fim do metodo atualizar
 
     public function excluirDocente($id)
     {

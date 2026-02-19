@@ -1,8 +1,6 @@
-<x-layout>
+<x-layout titulo="Área do Aluno - Senac">
     <div class="container-xl py-4 shadow">
-
         <!-- Conteudo Principal -->
-
         <section class="container-fluid">
 
             <!-- HEADER -->
@@ -18,10 +16,12 @@
 
                 <div class="d-flex align-items-center gap-3">
                     <span class="badge rounded-pill bg-primary-subtle text-primary fs-6">👤</span>
+                    @if($aluno)
                     <div>
                         <div class="fw-semibold">{{ $aluno->nomeAluno}}</div>
                         <small class="text-muted">{{ $aluno->ra}}</small>
                     </div>
+                    @endif
                 </div>
             </div>
 
@@ -30,10 +30,22 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center gap-3">
                         <i class="bi bi-book fs-5"></i>
+                        @if($ucAtual)
                         <div>
-                            <div class="fw-bold">{{ $uc->nome}}</div>
-                            <small class="text-muted">{{ $uc->docente}}</small>
+                            <div class="fw-bold">
+                                {{ $ucAtual->nome }}
+                                <span class="badge bg-success ms-2">Selecionada</span>
+                            </div>
+                            <small class="text-muted">
+                                {{ $ucAtual->docente->nomeDocente ?? 'Docente não informado' }}
+                            </small>
                         </div>
+                        @else
+                        <div>
+                            <div class="fw-bold text-muted">Nenhuma UC disponível</div>
+                            <small class="text-muted">Você ainda não possui unidades curriculares vinculadas.</small>
+                        </div>
+                        @endif
                     </div>
 
                     <div class="dropdown">
@@ -43,114 +55,98 @@
                         </button>
 
                         <ul class="dropdown-menu dropdown-menu-end">
-                            @foreach($ucs as $uc)
+
+                            <!-- UCs Passadas -->
+                            @if($ucsPassadas->isNotEmpty())
+                            <li class="dropdown-header">UCs Concluídas</li>
+                            @foreach($ucsPassadas as $ucItem)
                             <li>
-                                <a href="#" class="dropdown-item uc-item" data-uc-id="{{ $uc->id }}">
-                                    {{ $uc->nome }}
+                                <a href="{{ request()->url() }}?uc_id={{ $ucItem->id }}"
+                                    class="dropdown-item
+                                    {{ isset($ucAtual) && $ucAtual->id == $ucItem->id ? 'active' : '' }}">
+                                    {{ $ucItem->nome }}
                                 </a>
+
                             </li>
                             @endforeach
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            @endif
+
+                            <!-- UCs Futuras -->
+                            @if($ucsFuturas->isNotEmpty())
+                            <li class="dropdown-header">Próximas UCs</li>
+                            @foreach($ucsFuturas as $ucItem)
+                            <li>
+                                <a href="{{ request()->url() }}?uc_id={{ $ucItem->id }}"
+                                    class="dropdown-item
+                                {{ isset($ucAtual) && $ucAtual->id == $ucItem->id ? 'active' : '' }}">
+                                    {{ $ucItem->nome }}
+                                </a>
+
+                            </li>
+                            @endforeach
+                            @endif
+
+                            <!-- Caso não exista nenhuma -->
+                            @if($ucsPassadas->isEmpty() && $ucsFuturas->isEmpty())
+                            <li>
+                                <span class="dropdown-item text-muted">
+                                    Nenhuma outra UC disponível
+                                </span>
+                            </li>
+                            @endif
                         </ul>
-
-                        <!-- public function controlePresenca($aluno_id, $uc_id = null)
-                        {
-                        $aluno = Aluno::findOrFail($aluno_id);
-
-                        // Todas as UCs do aluno
-                        $ucs = $aluno->ucs;
-
-                        // Se não escolher UC, pega a primeira
-                        if (!$uc_id) {
-                        $ucSelecionada = $ucs->first();
-                        } else {
-                        $ucSelecionada = $ucs->where('id', $uc_id)->first();
-                        }
-
-                        // Exemplo de cálculo
-                        $totalAulas = $ucSelecionada->aulas->count();
-                        $presencas = $ucSelecionada->presencas()
-                        ->where('aluno_id', $aluno->id)
-                        ->where('presente', 1)
-                        ->count();
-
-                        $faltas = $totalAulas - $presencas;
-                        $percentual = $totalAulas > 0
-                        ? ($presencas / $totalAulas) * 100
-                        : 0;
-
-                        return view('controle-presenca', compact(
-                        'aluno',
-                        'ucs',
-                        'ucSelecionada',
-                        'totalAulas',
-                        'presencas',
-                        'faltas',
-                        'percentual'
-                        ));
-                        }
-                        🧱 2️⃣ Rota
-                        Route::get('/presenca/{aluno}/{uc?}',
-                        [PresencaController::class, 'controlePresenca']
-                        )->name('presenca'); -->
-
-                        <!-- Testar algum destes -->
-
-                        <!-- PASSO 2 — Criar rota
-                        Route::get('/presenca/dados/{uc}/{aluno}', [PresencaController::class, 'buscarDados']);
-
-                        ✅ PASSO 3 — Controller
-                        public function buscarDados($ucId, $alunoId)
-                        {
-                        $dados = Presenca::where('uc_id', $ucId)
-                        ->where('aluno_id', $alunoId)
-                        ->first();
-
-                        return response()->json([
-                        'percentual' => $dados->percentual,
-                        'total_aulas' => $dados->total_aulas,
-                        'presencas' => $dados->presencas,
-                        'faltas' => $dados->faltas
-                        ]);
-                        } -->
                     </div>
                 </div>
             </div>
 
             <!-- STATUS -->
-            <div class="alert alert-success rounded-4 d-flex align-items-center gap-3 mb-4">
-                <span class="badge bg-success rounded-pill fs-4">✔</span>
+            @if(!empty($ucAtual))
+            <div class="alert {{ $percentualPresenca >= 75 ? 'alert-success' : 'alert-danger' }} rounded-4 d-flex align-items-center gap-3 mb-4">
+                <span class="badge {{ $percentualPresenca >= 75 ? 'bg-success' : 'bg-danger' }} rounded-pill fs-4">
+                    {{ $percentualPresenca >= 75 ? '✔' : '⚠' }}
+                </span>
                 <div>
-                    <div class="fw-bold fs-4">80.0%</div>
-                    <small>Você está aprovado!</small>
+                    <div class="fw-bold fs-4">
+                        {{ number_format($percentualPresenca, 1) }}%
+                    </div>
+                    <small>
+                        {{ $percentualPresenca >= 75 ? 'Você está aprovado!' : 'Atenção ao limite de faltas.' }}
+                    </small>
                 </div>
             </div>
-
+            @endif
             <!-- RESUMO -->
             <div class="row g-3 mb-4">
-
+                @if(!empty($ucAtual))
                 <div class="col-md-4">
                     <div class="p-3 bg-primary-subtle rounded-4">
                         <small>Total de Aulas</small>
-                        <h3 class="fw-bold text-primary mb-0">20</h3>
+                        <h3 class="fw-bold text-primary mb-0">{{ $totalAulas }}</h3>
                     </div>
                 </div>
 
                 <div class="col-md-4">
                     <div class="p-3 bg-success-subtle rounded-4">
                         <small>Presenças</small>
-                        <h3 class="fw-bold text-success mb-0">16</h3>
+                        <h3 class="fw-bold text-success mb-0">{{ $totalPresencas }}</h3>
                     </div>
                 </div>
 
                 <div class="col-md-4">
                     <div class="p-3 bg-danger-subtle rounded-4">
                         <small>Faltas</small>
-                        <h3 class="fw-bold text-danger mb-0">4</h3>
+                        <h3 class="fw-bold text-danger mb-0">{{ $totalFaltas }}</h3>
                     </div>
                 </div>
-
+                @else
+                <div class="text-center text-muted py-4">
+                    Não há dados de presença para exibir.
+                </div>
+                @endif
             </div>
         </section>
-
     </div>
 </x-layout>
