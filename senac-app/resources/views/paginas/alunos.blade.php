@@ -292,7 +292,7 @@
                             <div class="row">
                                 <div class="col">
                                     <label class="form-label fw-semibold">Senha</label>
-                                    <input type="text" name="senhaAluno" class="form-control" value="{{ old('senhaAluno') }}" placeholder="Informe a senha do aluno" required>
+                                    <input type="password" name="senhaAluno" class="form-control" value="{{ old('senhaAluno') }}" placeholder="Informe a senha do aluno" required>
                                 </div>
 
                                 <div class="col">

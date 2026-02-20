@@ -137,8 +137,8 @@
                                             <div class="fw-semibold text-secondary mb-2">{{ $curso->nome }}</div>
                                             @foreach($curso->ucs as $uc)
                                             <div class="form-check mb-2 ms-3">
-                                                <input class="form-check-input" type="checkbox" name="ucs[]" value="{{ $uc->id }}" id="uc{{ $curso->id }}-{{ $uc->id }}">
                                                 <label class="form-check-label" for="uc{{ $curso->id }}-{{ $uc->id }}">{{ $uc->nome }}</label>
+                                                <input class="form-check-input" type="checkbox" name="ucs[]" value="{{ $uc->id }}" id="uc{{ $curso->id }}-{{ $uc->id }}">
                                             </div>
                                             @endforeach
                                         </div>

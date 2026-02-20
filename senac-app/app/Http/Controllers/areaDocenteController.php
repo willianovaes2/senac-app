@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\aulaModel;
 use App\Models\cursoModel;
 use App\Models\turmaModel;
 use App\Models\ucModel;
-use App\Models\alunoModel;
-
-
 
 class AreaDocenteController extends Controller
 {
@@ -80,16 +78,22 @@ class AreaDocenteController extends Controller
 
     public function centralAula($id)
     {
-        $aula = aulaModel::with([
-            'uc',
+        $aula = AulaModel::with([
+            'uc.indicadores',
             'curso',
             'turmas',
             'docenteResponsavel',
-            'alunos' // se existir relação
+            'alunos'
         ])->findOrFail($id);
 
+        // Verifica na sessão se já houve avaliação parcial
+        $avaliacoesParciais = session()->get("avaliacao_parcial_aula_$id", false);
+
+        $avaliacaoFinalLiberada = $avaliacoesParciais ? true : false;
+
         return view('paginas.docente.centralAula', [
-            'aula' => $aula
+            'aula' => $aula,
+            'avaliacaoFinalLiberada' => $avaliacaoFinalLiberada
         ]);
     }
 }

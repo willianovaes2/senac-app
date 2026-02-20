@@ -149,7 +149,7 @@ class aulaController extends Controller
 
     public function realizarChamada($aulaId)
     {
-        $aula = aulaModel::with('turmas.alunos', 'alunos')->findOrFail($aulaId);
+        $aula = AulaModel::with('turmas.alunos', 'alunos')->findOrFail($aulaId);
 
         // Pegando apenas a primeira turma vinculada
         $turma = $aula->turmas->first();
@@ -158,14 +158,20 @@ class aulaController extends Controller
             return back()->with('erro', 'Aula sem turma vinculada.');
         }
 
-        $alunos = $turma->alunos->sortBy('nomeAluno');
+        // Ordena os alunos pelo nome
+        $alunos = $turma->alunos->sortBy('nomeAluno')->values();
 
         $totalAlunos = $alunos->count();
 
-        $totalPresenca = $aula->alunos->where('pivot.presenca', 1)->count();
+        // Conta presenças registradas na pivot
+        $totalPresenca = $aula->alunos
+            ->where('pivot.presenca', 1)
+            ->count();
 
+        // Total de faltas
         $totalFaltas = $totalAlunos - $totalPresenca;
 
+        // Percentual de faltas
         $percentualFalta = $totalAlunos > 0
             ? round(($totalFaltas / $totalAlunos) * 100, 1)
             : 0;

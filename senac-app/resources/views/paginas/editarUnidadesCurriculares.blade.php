@@ -3,41 +3,44 @@
         <!-- Abas -->
         <ul class="nav nav-pills gap-2 mb-4">
             <li class="nav-item">
-                <a class="btn btn-primary" href="dashboardAdm"><i class="bi bi-bar-chart"></i></i> Dashboard</a>
+                <a class="btn btn-primary" href="/dashboardAdm"><i class="bi bi-bar-chart"></i> Dashboard</a>
             </li>
+
             <li class="nav-item">
-                <a class="btn btn-primary" href="cursos"><i class="bi bi-backpack"></i> Cursos</a>
+                <a class="btn btn-primary" href="/cursos"><i class="bi bi-backpack"></i> Cursos</a>
             </li>
+
             <li class="nav-item">
-                <a class="btn btn-primary active" href="unidadesCurriculares"><i class="bi bi-book"></i> UCs</a>
+                <a class="btn btn-primary active" href="/unidadesCurriculares"><i class="bi bi-book"></i> UCs</a>
             </li>
+
             <li class="nav-item">
-                <a class="btn btn-primary" href="docentes"><i class="bi bi-person-workspace"></i> Docentes</a>
+                <a class="btn btn-primary" href="/docentes"><i class="bi bi-person-workspace"></i> Docentes</a>
             </li>
+
             <li class="nav-item">
-                <a class="btn btn-primary" href="alunos"><i class="bi bi-person"></i> Alunos</a>
+                <a class="btn btn-primary" href="/alunos"><i class="bi bi-person"></i> Alunos</a>
             </li>
+
             <li class="nav-item">
-                <a class="btn btn-primary" href="turmas"><i class="bi bi-people-fill"></i> Turmas</a>
+                <a class="btn btn-primary" href="/turmas"><i class="bi bi-people-fill"></i> Turmas</a>
             </li>
+
             <li class="nav-item">
-                <a class="btn btn-primary" href="aulas"><i class="bi bi-file-bar-graph"></i>
-                    Aulas</a>
+                <a class="btn btn-primary" href="/aulas"><i class="bi bi-person"></i> Aulas</a>
             </li>
+
             <li class="nav-item">
-                <a class="btn btn-primary" href="indicadores"><i class="bi bi-card-list"></i>
-                    Indicadores</a>
+                <a class="btn btn-primary" href="/indicadores"><i class="bi bi-person"></i> Indicadores</a>
             </li>
+
             <li class="nav-item">
-                <a class="btn btn-primary" href="relatorios"><i class="bi bi-clipboard-data"></i>
-                    Relatórios</a>
+                <a class="btn btn-primary" href="/relatorios"> <i class="bi bi-clipboard-data"></i> Relatórios</a>
             </li>
         </ul>
 
         <!-- Conteudo Principal -->
-
         <section class="container-fluid">
-
             <!-- Cabeçalho -->
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
@@ -49,7 +52,6 @@
                     <i class="bi bi-arrow-left me-1"></i> Voltar
                 </a>
             </div>
-
 
             <form action="/atualizarUc/{{$dado->id}}" method="POST">
                 @csrf
@@ -82,78 +84,44 @@
                                     {{ $curso->nome }}
                                 </option>
                                 @endforeach
-                                </select>
-
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <!-- Carga Horária -->
-                        <div class="col">
-                            <label class="form-label fw-semibold">Carga Horária (horas) *</label>
-                            <input type="number" name="cargaHoraria" class="form-control" min="0" value="{{$dado->cargaHoraria}}" required>
-                        </div>
-
-                        <!-- Turno -->
-                        <div class="col">
-                            <label class="form-label fw-semibold">Presença Mínima (%) *</label>
-                            <input type="number" name="presencaMinima" class="form-control" min="0" value="{{$dado->presencaMinima}}" required>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <!-- Horário -->
-                        <div class="col">
-                            <label class="form-label fw-semibold">Dias de Aula *</label>
-                            <select name="dias" class="form-select" required>
-                                <option value="">Selecione os dias</option>
-                                <option value="segunda a sexta" {{ $dado->dias == 'segunda a sexta' ? 'selected' : '' }}>
-                                    Segunda a Sexta
-                                </option>
-                                <option value="segunda, quarta e sexta" {{ $dado->dias == 'segunda, quarta e sexta' ? 'selected' : '' }}>
-                                    Segunda, Quarta e Sexta
-                                </option>
-                                <option value="terca e quinta" {{ $dado->dias == 'terca e quinta' ? 'selected' : '' }}>
-                                    Terça e Quinta
-                                </option>
-                                <option value="sabado" {{ $dado->dias == 'sabado' ? 'selected' : '' }}>
-                                    Sábado
-                                </option>
                             </select>
-
-                        </div>
-
-                        <!-- Data Início -->
-                        <div class="col">
-                            <label class="form-label fw-semibold">Horário *</label>
-                            <input type="text" name="horario" class="form-control" placeholder="08:00 - 12:00" value="{{$dado->horario}}" required>
                         </div>
                     </div>
+                </div>
 
-                    <div class="row">
-                        <!-- Descrição -->
-                        <div class="col">
-                            <label class="form-label fw-semibold">Descrição</label>
-                            <input type="text" name="descricao" class="form-control"
-                                placeholder="Descreva o conteúdo da UC..." value="{{$dado->descricao}}">
-                        </div>
+                <div class="row">
+                    <!-- Carga Horária -->
+                    <div class="col">
+                        <label class="form-label fw-semibold">Carga Horária (horas) *</label>
+                        <input type="number" name="cargaHoraria" class="form-control" min="0" value="{{$dado->cargaHoraria}}" required>
                     </div>
 
-                    <div class="row">
-                        <!-- Status -->
-                        <div class="col">
-                            <label class="form-label fw-semibold">Status</label>
-                            <select name="status" class="form-select">
-                                <option value="ativo" {{ $dado->status == 'ativo' ? 'selected' : '' }}>Ativo</option>
-                                <option value="inativo" {{ $dado->status == 'inativo' ? 'selected' : '' }}>Inativo</option>
-                            </select>
-
-                        </div>
-
-                        <div class="col">
-
-                        </div>
+                    <!-- Presença Mínima -->
+                    <div class="col">
+                        <label class="form-label fw-semibold">Presença Mínima (%) *</label>
+                        <input type="number" name="presencaMinima" class="form-control" min="0" value="{{$dado->presencaMinima}}" required>
                     </div>
+                </div>
+
+                <div class="row">
+                    <!-- Descrição -->
+                    <div class="col">
+                        <label class="form-label fw-semibold">Descrição</label>
+                        <textarea rows="3" type="text" name="descricao" class="form-control"
+                            placeholder="Descreva o conteúdo da UC..." style="resize: none;">{{$dado->descricao}}</textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Status -->
+                    <div class="col">
+                        <label class="form-label fw-semibold">Status</label>
+                        <select name="status" class="form-select">
+                            <option value="ativo" {{ $dado->status == 'ativo' ? 'selected' : '' }}>Ativo</option>
+                            <option value="inativo" {{ $dado->status == 'inativo' ? 'selected' : '' }}>Inativo</option>
+                        </select>
+                    </div>
+                    <div class="col"></div>
                 </div>
 
                 <!-- Footer -->
@@ -178,7 +146,7 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                Tem certeza que deseja excluir a Unidade Curricular: {{ $dado->nome }}? 
+                                Tem certeza que deseja excluir a Unidade Curricular: {{ $dado->nome }}?
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Não</button>
@@ -188,7 +156,6 @@
                     </div>
                 </div>
             </form>
-
         </section>
     </div>
 </x-layout>

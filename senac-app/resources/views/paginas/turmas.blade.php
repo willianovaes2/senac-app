@@ -265,6 +265,7 @@
                                         class="form-control"
                                         min="1"
                                         max="12"
+                                        placeholder="Informe as horas letivas"
                                         required>
                                 </div>
                             </div>

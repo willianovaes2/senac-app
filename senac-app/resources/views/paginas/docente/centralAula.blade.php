@@ -104,15 +104,10 @@
                             Avaliação Parcial
                         </a>
 
-                        @if($aula->status_calculado == 'pendente')
-                        <button class="btn btn-secondary w-50 mt-3 py-3" disabled>
-                            Avaliação Final indisponível
-                        </button>
-                        @else
                         <a href="{{ route('avaliacaoFinal', $aula->id) }}" class="btn btn-success w-50 mt-3 py-3">
+                            <i class="bi bi-clipboard-check-fill me-2"></i>
                             Avaliação Final
                         </a>
-                        @endif
 
                     </div>
 

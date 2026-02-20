@@ -28,14 +28,14 @@ class vinculoController extends Controller
             'turmas' => turmaModel::withCount('alunos')->get(),
 
             'alunoTurmas' => DB::table('aluno_turma')
-            ->join('aluno', 'aluno.id', '=', 'aluno_turma.aluno_id')
-            ->join('turma', 'turma.id', '=', 'aluno_turma.turma_id')
-            ->select(
-                'aluno_turma.id',
-                'aluno.nomeAluno',
-                'turma.codigoTurma'
-            )
-            ->get(),
+                ->join('aluno', 'aluno.id', '=', 'aluno_turma.aluno_id')
+                ->join('turma', 'turma.id', '=', 'aluno_turma.turma_id')
+                ->select(
+                    'aluno_turma.id',
+                    'aluno.nomeAluno',
+                    'turma.codigoTurma'
+                )
+                ->get(),
             'cursoUcs' => DB::table('curso_uc')
                 ->join('uc', 'uc.id', '=', 'curso_uc.uc_id')
                 ->join('curso', 'curso.id', '=', 'curso_uc.curso_id')
@@ -143,5 +143,36 @@ class vinculoController extends Controller
         $curso->ucs()->syncWithoutDetaching($request->ucs);
 
         return redirect()->back()->with('success', 'Vínculo realizado com sucesso!');
+    }
+
+
+    public function removerAlunoTurma($id)
+    {
+        DB::table('aluno_turma')->where('id', $id)->delete();
+        return redirect()->back()->with('success', 'Vínculo removido com sucesso!');
+    }
+
+    public function removerCursoUc($id)
+    {
+        DB::table('curso_uc')->where('id', $id)->delete();
+        return redirect()->back()->with('success', 'Vínculo removido com sucesso!');
+    }
+
+    public function removerDocenteCurso($id)
+    {
+        DB::table('docente_curso')->where('id', $id)->delete();
+        return redirect()->back()->with('success', 'Vínculo removido com sucesso!');
+    }
+
+    public function removerDocenteUc($id)
+    {
+        DB::table('docente_uc')->where('id', $id)->delete();
+        return redirect()->back()->with('success', 'Vínculo removido com sucesso!');
+    }
+
+    public function removerDocenteTurma($id)
+    {
+        DB::table('docente_turma')->where('id', $id)->delete();
+        return redirect()->back()->with('success', 'Vínculo removido com sucesso!');
     }
 }

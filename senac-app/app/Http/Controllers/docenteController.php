@@ -22,7 +22,7 @@ class docenteController extends Controller
         $request->validate([
             'cpf'            => ['required', new ValidaCpf, 'unique:docente,cpf'],
             'emailDocente'   => 'required|email|unique:docente,emailDocente',
-            'turno' => 'required|string'
+            'turno'          => 'required|array|min:1'
         ], [
             'cpf.unique' => 'Este CPF já está cadastrado.',
             'emailDocente.unique' => 'Este e-mail já está cadastrado.',
@@ -51,11 +51,12 @@ class docenteController extends Controller
         $especializacao         = $request->input('especializacao');
         $status                 = $request->input('status');
         $cargaHoraria           = $request->input('cargaHoraria');
-        $turno                  = $request->input('turno');
+        $turno                  = $request->input('turno', []);
         $dataCadastro           = now();
         $senhaDocente           = $request->input('senhaDocente');
         $endereco               = $request->input('endereco');
         $area                   = $request->input('area');
+
 
         //chamando model
         $model = new docenteModel();
@@ -73,6 +74,7 @@ class docenteController extends Controller
         $model->senhaDocente                    = $senhaDocente;
         $model->endereco                        = $endereco;
         $model->area                            = $area;
+
         $model->save();
         return redirect('/docentes');
     } //fim do metodo inserir

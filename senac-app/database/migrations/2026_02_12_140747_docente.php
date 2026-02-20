@@ -26,7 +26,7 @@ return new class extends Migration
             $table->enum('status', ['ativo', 'inativo'])->default('ativo');
             $table->date('dataCadastro');
             $table->integer('cargaHoraria');
-            $table->longtext('turno')->nullable;
+            $table->json('turno')->nullable();
             $table->longtext('senhaDocente');
             $table->longtext('endereco');
             $table->longText('area');

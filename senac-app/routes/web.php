@@ -103,3 +103,10 @@ Route::get('/avaliacaoParcial/{aula}', [\App\Http\Controllers\aulaController::cl
 Route::post('/avaliacaoParcial/{aula}', [\App\Http\Controllers\aulaController::class, 'salvarParcial'])->name('salvarParcial');
 Route::get('/avaliacaoFinal/{aula}', [\App\Http\Controllers\aulaController::class, 'avaliacaoFinal'])->name('avaliacaoFinal');
 Route::post('/avaliacaoFinal/{aula}', [\App\Http\Controllers\aulaController::class, 'salvarFinal'])->name('salvarFinal');
+
+// REMOVER VINCULOS
+Route::get('/vinculos/removerAlunoTurma/{id}', [\App\Http\Controllers\vinculoController::class, 'removerAlunoTurma']);
+Route::get('/vinculos/removerCursoUc/{id}', [\App\Http\Controllers\vinculoController::class, 'removerCursoUc']);
+Route::get('/vinculos/removerDocenteCurso/{id}', [\App\Http\Controllers\vinculoController::class, 'removerDocenteCurso']);
+Route::get('/vinculos/removerDocenteUc/{id}', [\App\Http\Controllers\vinculoController::class, 'removerDocenteUc']);
+Route::get('/vinculos/removerDocenteTurma/{id}', [\App\Http\Controllers\vinculoController::class, 'removerDocenteTurma']);

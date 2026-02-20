@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\alunoModel;
-use App\Models\ucModel;
 use App\Models\aulaModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
-
 
 class telaAlunoController extends Controller
 {
@@ -54,7 +52,7 @@ class telaAlunoController extends Controller
             return $uc->dataInicio > $hoje;
         });
 
-        // 🔥 DEFINIR UC ATUAL
+        // Definir UC Atual
         if ($request->has('uc_id')) {
             $ucAtual = $ucs->where('id', $request->uc_id)->first();
         }
@@ -64,47 +62,50 @@ class telaAlunoController extends Controller
         }
 
         // ==============================
-        // 🔥 CÁLCULO DE PRESENÇA
+        // CÁLCULO DE PRESENÇA CORRIGIDO
         // ==============================
 
         $totalAulas = 0;
         $totalPresencas = 0;
         $totalFaltas = 0;
         $percentualPresenca = 0;
-        $limiteFaltas = 0;
-        $faltasRestantes = 0;
         $reprovadoPorFalta = false;
+        $aulasPendentes = 0;
 
         if ($ucAtual) {
 
+            // Todas as aulas já ocorridas da UC
             $aulas = aulaModel::where('uc_id', $ucAtual->id)
                 ->whereDate('dia', '<=', now())
                 ->where('status', '!=', 'cancelada')
                 ->get();
 
             $totalAulas = $aulas->count();
+            $aulaIds = $aulas->pluck('id');
 
-            if ($totalAulas > 0) {
+            // Buscar apenas registros realmente lançados pelo docente
+            $registros = DB::table('aula_aluno')
+                ->where('aluno_id', $aluno->id)
+                ->whereIn('aula_id', $aulaIds)
+                ->get();
 
-                $totalPresencas = DB::table('aula_aluno')
-                    ->where('aluno_id', $aluno->id)
-                    ->whereIn('aula_id', $aulas->pluck('id'))
-                    ->where('presenca', 1)
-                    ->count();
+            $totalAulasRegistradas = $registros->count();
 
-                $totalFaltas = $totalAulas - $totalPresencas;
+            if ($totalAulasRegistradas > 0) {
 
-                $percentualPresenca = ($totalPresencas / $totalAulas) * 100;
+                $totalPresencas = $registros->where('presenca', 1)->count();
+                $totalFaltas = $registros->where('presenca', 0)->count();
 
-                $limiteFaltas = floor($totalAulas * 0.25);
+                $percentualPresenca = ($totalPresencas / $totalAulasRegistradas) * 100;
 
-                $faltasRestantes = $limiteFaltas - $totalFaltas;
-
-                if ($faltasRestantes < 0) {
+                // Regra oficial: mínimo 75%
+                if ($percentualPresenca < 75) {
                     $reprovadoPorFalta = true;
-                    $faltasRestantes = 0;
                 }
             }
+
+            // Aulas que ainda não tiveram registro
+            $aulasPendentes = $totalAulas - $totalAulasRegistradas;
         }
 
         return view('paginas.aluno.telaInicialAluno', compact(
@@ -117,9 +118,8 @@ class telaAlunoController extends Controller
             'totalPresencas',
             'totalFaltas',
             'percentualPresenca',
-            'limiteFaltas',
-            'faltasRestantes',
-            'reprovadoPorFalta'
+            'reprovadoPorFalta',
+            'aulasPendentes'
         ));
     }
 }

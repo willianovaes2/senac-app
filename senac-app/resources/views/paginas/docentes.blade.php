@@ -78,7 +78,15 @@
                             <li><strong>Telefone:</strong> {{ $docente->telefone }}</li>
                             <li><strong>Formação:</strong> {{ $docente->formacao }}</li>
                             <li><strong>Especialização:</strong> {{ $docente->especializacao }}</li>
-                            <li><strong>Turno:</strong> {{ $docente->turno }}</li>
+                            <li>
+                                <strong>Turno:</strong>
+                                @if ($docente->turno)
+                                {{ implode(', ', array_map('ucfirst', $docente->turno)) }}
+                                @else
+                                —
+                                @endif
+                            </li>
+
                             <li><strong>Carga Horária:</strong> {{ $docente->cargaHoraria }}</li>
                         </ul>
 
@@ -125,7 +133,8 @@
                     </div>
 
                     <!-- Form -->
-                    <form action="/inserirDocente" method="POST">
+                    <form action="/inserirDocente" method="POST" id="form-docente">
+
                         @csrf
 
                         <div class="modal-body">
@@ -220,14 +229,8 @@
 
                                 <!-- Turno de Trabalho -->
                                 <div class="col">
-                                    <label class="form-label fw-semibold">Turno *</label>
-                                    <select name="turno" class="form-select" value="{{ old('Turno') }}" required>
-                                        <option value="">Selecione o turno</option>
-                                        <option value="manha">Manhã</option>
-                                        <option value="tarde">Tarde</option>
-                                        <option value="noite">Noite</option>
-                                        <option value="integral">Integral</option>
-                                    </select>
+                                    <label class="form-label fw-semibold">Senha</label>
+                                    <input type="password" name="senhaDocente" class="form-control" value="{{ old('senhaDocente') }}" placeholder="Informe a senha do docente" required>
                                 </div>
                             </div>
 
@@ -247,25 +250,50 @@
                                         <option value="inativo">Inativo</option>
                                     </select>
                                 </div>
-
                             </div>
 
                             <div class="row">
                                 <div class="col">
-                                    <label class="form-label fw-semibold">Senha</label>
-                                    <input type="text" name="senhaDocente" class="form-control" value="{{ old('senhaDocente') }}" placeholder="Informe a senha do docente" required>
+                                    <!-- Turno de Trabalho -->
+                                    <label class="form-label fw-semibold">Turnos</label>
+
+                                    @if ($errors->has('turnos'))
+                                    <div class="text-danger small mb-2">
+                                        {{ $errors->first('turnos') }}
+                                    </div>
+                                    @endif
+
+
+                                    <div class="lista-scroll">
+                                        <div class="form-check">
+                                            <input class="form-check-input turno-checkbox"
+                                                type="checkbox" name="turno[]"
+                                                value="manha" id="manha">
+                                            <label class="form-check-label" for="manha">
+                                                Manhã
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input turno-checkbox"
+                                                type="checkbox" name="turno[]"
+                                                value="tarde" id="tarde">
+                                            <label class="form-check-label" for="tarde">
+                                                Tarde
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input turno-checkbox"
+                                                type="checkbox" name="turno[]"
+                                                value="noite" id="noite">
+                                            <label class="form-check-label" for="noite">
+                                                Noite
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="col">
 
-                                </div>
-                            </div>
-
-                            <div class="alert alert-primary d-flex align-items-start gap-2 mt-3">
-                                <i class="bi bi-info-circle"></i>
-                                <div class="w-75">
-                                    <strong>Nota:</strong>
-                                    O e-mail e o CPF devem ser únicos. Não será permitido cadastro com dados já existentes.
                                 </div>
                             </div>
                         </div>
@@ -299,4 +327,5 @@
         });
     </script>
     @endif
+
 </x-layout>
