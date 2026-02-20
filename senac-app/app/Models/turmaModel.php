@@ -44,9 +44,14 @@ class turmaModel extends Model
             'aluno_id'
         );
     }
-    
+
     public function aulas()
     {
-        return $this->hasMany(aulaModel::class, 'turma_id');
+        return $this->belongsToMany(
+            aulaModel::class,
+            'aula_turma',
+            'turma_id',
+            'aula_id'
+        );
     }
 }

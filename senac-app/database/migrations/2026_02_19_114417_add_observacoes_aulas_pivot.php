@@ -8,14 +8,12 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // 1️⃣ Adiciona observação individual na pivot aula_aluno
         Schema::table('aula_aluno', function (Blueprint $table) {
-            $table->text('observacao')->nullable()->after('presenca');
+            $table->text('observacao')->nullable();
         });
 
-        // 2️⃣ Adiciona observação geral na tabela aulas
         Schema::table('aulas', function (Blueprint $table) {
-            $table->text('descricao')->nullable()->after('status');
+            $table->text('descricao')->nullable();
         });
     }
 

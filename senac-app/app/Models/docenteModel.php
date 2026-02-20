@@ -8,8 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class docenteModel extends Model
 {
     use HasFactory;
-    protected $table='docente';
-    
+
+    protected $table = 'docente';
+
+    // Libera todos os campos para mass assignment
+    protected $guarded = [];
+
     protected $casts = [
         'turno' => 'array'
     ];

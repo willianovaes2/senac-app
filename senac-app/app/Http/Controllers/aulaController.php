@@ -11,7 +11,7 @@ use App\Models\ucModel;
 use App\Models\turmaModel;
 use App\Models\docenteModel;
 use App\Models\cursoModel;
-use App\Models\UcTurmaModel;
+use App\Models\ucTurmaModel;
 use App\Models\indicadorModel;
 use App\Services\CalendarioLetivoService;
 
@@ -149,7 +149,7 @@ class aulaController extends Controller
 
     public function realizarChamada($aulaId)
     {
-        $aula = AulaModel::with('turmas.alunos', 'alunos')->findOrFail($aulaId);
+        $aula = aulaModel::with('turmas.alunos', 'alunos')->findOrFail($aulaId);
 
         // Pegando apenas a primeira turma vinculada
         $turma = $aula->turmas->first();
