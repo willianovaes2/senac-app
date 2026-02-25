@@ -132,7 +132,7 @@
 
                 {{-- ================= MODAL INICIAR UC ================= --}}
                 <div class="modal fade" id="modalIniciarUc-{{ $uc->id }}" tabindex="-1">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-dialog-centered">
                         <form method="POST" action="/iniciarUc">
                             @csrf
                             <input type="hidden" name="uc_id" value="{{ $uc->id }}">
@@ -291,9 +291,7 @@
                             <div class="row">
                                 <div class="col">
                                     <label class="form-label fw-semibold">Descrição</label>
-                                    <textarea rows="3" type="text" name="descricao" class="form-control"
-                                        placeholder="Descreva o conteúdo da UC..." style="resize: none;">
-                                    </textarea>
+                                    <textarea rows="3" name="descricao" class="form-control" placeholder="Descreva o conteúdo da UC..." style="resize: none;" required></textarea>
                                 </div>
                             </div>
 
