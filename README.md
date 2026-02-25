@@ -27,6 +27,7 @@ O projeto tem como foco substituir o sistema interno de gerenciamento escolar do
 - Cadastro de docentes
 - Sistema de Vínculos
 - Avaliações parciais
+- Avaliações Finais
 - Controle de cursos
 
 ---
