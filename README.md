@@ -22,13 +22,49 @@ O projeto tem como foco substituir o sistema interno de gerenciamento escolar do
 
 ## ✨ Funcionalidades
 
-- Sistema de Login para Aluno, Docentes e Administrador
-- Cadastro de alunos
-- Cadastro de docentes
-- Sistema de Vínculos
-- Avaliações parciais
-- Avaliações Finais
-- Controle de cursos
+### 🔐 Autenticação e Controle de Acesso
+O sistema possui autenticação com três perfis distintos: Administrador, Docente e Aluno.  
+Cada usuário visualiza apenas as funcionalidades permitidas ao seu perfil, com redirecionamento dinâmico após o login e controle de permissões aplicado no backend.
+
+### 👨‍🎓 Gestão de Alunos
+- Cadastro, edição e exclusão de alunos
+- Validação automática de CPF no momento do cadastro
+- Geração automática de RA (Registro Acadêmico) único
+- Associação de alunos às turmas
+- Visualização do próprio desempenho acadêmico
+
+O aluno pode acompanhar suas notas e evolução de forma organizada, com visualização por Unidade Curricular (UC), garantindo maior clareza sobre seu progresso ao longo do curso.
+
+### 👨‍🏫 Gestão de Docentes
+- Cadastro e manutenção de docentes
+- Vinculação de docentes a cursos e unidades curriculares
+- Lançamento de avaliações parciais
+- Realização de chamada (controle de presença dos alunos)
+- Registro de informações pedagógicas
+
+O docente possui acesso às turmas vinculadas, podendo registrar presença e notas, contribuindo diretamente para o acompanhamento acadêmico dos alunos.
+
+### 📚 Gestão Acadêmica
+- Cadastro de cursos e turmas
+- Organização das Unidades Curriculares (UCs)
+- Estruturação do ciclo acadêmico de forma centralizada
+
+### 🔄 Sistema de Vínculos
+- Relacionamento aluno × turma
+- Relacionamento docente × curso
+- Implementação de tabelas pivot utilizando Eloquent ORM para gerenciar relacionamentos muitos-para-muitos
+
+### 📝 Avaliações Parciais
+- Lançamento de notas pelos docentes
+- Registro de indicadores de desempenho
+- Armazenamento estruturado das avaliações no banco de dados
+- Consulta das notas pelo aluno de acordo com cada Unidade Curricular
+
+### 🛡️ Integridade e Validação de Dados
+- Validação de campos obrigatórios
+- Regras de consistência aplicadas no backend
+- Utilização de relacionamentos estruturados com Eloquent ORM
+- Garantia de integridade referencial entre as entidades do sistema
 
 ---
 
