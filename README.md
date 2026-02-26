@@ -1,4 +1,4 @@
-# 📚 Sistema de Gerenciamento Escolar com Laravel
+# Sistema de Gerenciamento Escolar com Laravel
 
 ![PHP](https://img.shields.io/badge/PHP-8.2-blue)
 ![Laravel](https://img.shields.io/badge/Laravel-10-red)
@@ -8,7 +8,7 @@
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5-purple)
 ![SQLite](https://img.shields.io/badge/Database-SQLite-lightgrey)
 
-📌 O Senac App é um Sistema de Gerenciamento Escolar (SGE) desenvolvido como parte do Projeto Integrador do curso Técnico em Informática no Senac São Bernardo do Campo.
+O Senac App é um Sistema de Gerenciamento Escolar (SGE) desenvolvido como parte do Projeto Integrador do curso Técnico em Informática no Senac São Bernardo do Campo.
 
 A aplicação foi construída utilizando framework Laravel com arquitetura MVC, com o objetivo de centralizar e automatizar processos acadêmicos como cadastro de alunos, docentes, cursos, turmas e avaliações.
 
@@ -20,16 +20,16 @@ O projeto propõe substituir o sistema interno de gerenciamento escolar do Senac
 
 ---
 
-## ✨ Funcionalidades
+## Funcionalidades
 
-### 🔐 Autenticação e Controle de Acesso
+### Autenticação e Controle de Acesso
 - Login com três perfis distintos: Administrador, Docente e Aluno  
 - Controle de permissões baseado em perfil  
 - Redirecionamento dinâmico conforme tipo de usuário  
 
 ---
 
-### 👨‍💼 Administrador
+### Administrador
 O Administrador possui controle total do sistema.
 
 - CRUD completo de alunos
@@ -40,7 +40,7 @@ O Administrador possui controle total do sistema.
 
 ---
 
-### 👨‍🏫 Docente
+### Docente
 O Docente atua diretamente no processo pedagógico.
 
 - Realização de chamada (controle de presença)
@@ -51,7 +51,7 @@ O Docente atua diretamente no processo pedagógico.
 
 ---
 
-### 👨‍🎓 Aluno
+### Aluno
 O Aluno possui acesso restrito às suas próprias informações acadêmicas.
 
 - Visualização de faltas e presenças
@@ -62,7 +62,7 @@ O aluno pode selecionar a Unidade Curricular desejada para visualizar seu histó
 
 ---
 
-### 🔄 Sistema de Vínculos
+### Sistema de Vínculos
 - Relacionamento Aluno × Turma
 - Relacionamento UC × Curso
 - Relacionamento Docente × Curso
@@ -72,7 +72,7 @@ O aluno pode selecionar a Unidade Curricular desejada para visualizar seu histó
 
 ---
 
-### 🛡️ Regras de Negócio e Integridade
+### Regras de Negócio e Integridade
 - Validação automática de CPF
 - Geração automática de RA único
 - Validação de campos obrigatórios
@@ -81,7 +81,7 @@ O aluno pode selecionar a Unidade Curricular desejada para visualizar seu histó
 
 ---
 
-## 🛠 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - PHP 8.x
 - Laravel 10
@@ -94,7 +94,7 @@ O aluno pode selecionar a Unidade Curricular desejada para visualizar seu histó
 
 ---
 
-## ⚠️ Status do Projeto
+## Status do Projeto
 
 Este projeto foi desenvolvido como parte de um Projeto Integrador e encontra-se em fase de aprimoramento.
 
