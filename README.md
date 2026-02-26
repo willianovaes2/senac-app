@@ -91,4 +91,14 @@ Atualmente, algumas funcionalidades ainda não estão finalizadas:
 - O sistema completo de cálculo e exibição de faltas.
 - As funcionalidades relacionadas às avaliações (parciais e finais).
 
+## Desenvolvedores
+
+Este projeto foi desenvolvido por:
+
+- **Willian Novaes** – [GitHub](https://github.com/willianovaes2)  
+- **Pedro Henrique Sobreira** – [GitHub](https://github.com/PedroHSobreira)  
+- **André Rios** – [GitHub](https://github.com/de7007)  
+
+Agradecimentos especiais a todos que contribuíram para o desenvolvimento do projeto.
+
 ---
