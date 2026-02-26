@@ -8,6 +8,10 @@
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5-purple)
 ![SQLite](https://img.shields.io/badge/Database-SQLite-lightgrey)
 
+---
+
+## Descrição do Projeto
+
 O Senac App é um Sistema de Gerenciamento Escolar (SGE) desenvolvido como parte do Projeto Integrador do curso Técnico em Informática no Senac São Bernardo do Campo.
 
 A aplicação foi construída utilizando framework Laravel com arquitetura MVC, com o objetivo de centralizar e automatizar processos acadêmicos como cadastro de alunos, docentes, cursos, turmas e avaliações.
@@ -18,16 +22,12 @@ Durante o desenvolvimento foram aplicados conceitos de modelagem de banco de dad
 
 O projeto propõe substituir o sistema interno de gerenciamento escolar do Senac por uma solução digital estruturada, moderna e centralizada, promovendo maior eficiência com foco de automatizar processos facilitando todos os usuários promovendo transparência e melhor acompanhamento da jornada acadêmica.
 
----
-
 ## Funcionalidades
 
 ### Autenticação e Controle de Acesso
 - Login com três perfis distintos: Administrador, Docente e Aluno  
 - Controle de permissões baseado em perfil  
 - Redirecionamento dinâmico conforme tipo de usuário  
-
----
 
 ### Administrador
 O Administrador possui controle total do sistema.
@@ -38,8 +38,6 @@ O Administrador possui controle total do sistema.
 - Gerenciamento de vínculos entre entidades
 - Organização da estrutura acadêmica
 
----
-
 ### Docente
 O Docente atua diretamente no processo pedagógico.
 
@@ -48,8 +46,6 @@ O Docente atua diretamente no processo pedagógico.
 - Lançamento de avaliações finais
 - Registro de notas por Unidade Curricular
 - Acompanhamento acadêmico das turmas vinculadas
-
----
 
 ### Aluno
 O Aluno possui acesso restrito às suas próprias informações acadêmicas.
@@ -60,8 +56,6 @@ O Aluno possui acesso restrito às suas próprias informações acadêmicas.
 
 O aluno pode selecionar a Unidade Curricular desejada para visualizar seu histórico de frequência e progresso.
 
----
-
 ### Sistema de Vínculos
 - Relacionamento Aluno × Turma
 - Relacionamento UC × Curso
@@ -70,16 +64,12 @@ O aluno pode selecionar a Unidade Curricular desejada para visualizar seu histó
 - Relacionamento Docente × Turma
 - Implementação de tabelas pivot utilizando Eloquent ORM para gerenciar relacionamentos muitos-para-muitos
 
----
-
 ### Regras de Negócio e Integridade
 - Validação automática de CPF
 - Geração automática de RA único
 - Validação de campos obrigatórios
 - Aplicação de regras de consistência no backend
 - Garantia de integridade referencial entre as entidades do sistema
-
----
 
 ## Tecnologias Utilizadas
 
@@ -91,8 +81,6 @@ O aluno pode selecionar a Unidade Curricular desejada para visualizar seu histó
 - CSS3
 - JavaScript
 - Bootstrap 5
-
----
 
 ## Status do Projeto
 
