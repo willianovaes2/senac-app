@@ -90,6 +90,5 @@ Atualmente, algumas funcionalidades ainda não estão finalizadas:
 
 - O sistema completo de cálculo e exibição de faltas.
 - As funcionalidades relacionadas às avaliações (parciais e finais).
-- A interface do perfil do aluno ainda está sendo aprimorado.
 
 ---
